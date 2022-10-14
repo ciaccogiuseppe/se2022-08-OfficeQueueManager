@@ -3,7 +3,7 @@
 ## Usage
 
 ### Frontend
-- in client/se2022-08-oqm run `npm install`, then `npm install`
+- in client/se2022-08-oqm run `npm install`, then `npm run`
 
 ### Backend
 
