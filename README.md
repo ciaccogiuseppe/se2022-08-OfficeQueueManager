@@ -2,21 +2,22 @@
 
 ## Usage
 
-### Frontend
-- in client/se2022-08-oqm run `npm install`, then `npm run`
+### Client
+- in client/se2022-08-oqm run `npm install`, then `npm start`
 
-### Backend
+### Server
+- in server/ run `node index.js` or `nodemon index.js` if nodemon is installed
 
 
 ## Frontend
-- React
-- MUI
+- React **18.2.0**
+- MUI **5.10.9**
 
 ## Backend
-- NodeJS
-- Sqlite
-- express
-- passport
+- NodeJS **16.18**
+- Sqlite3 **5.1.2**
+- express **4.18.2**
+- passport **0.6.0**
 
 ## Testing
 - Mocha
