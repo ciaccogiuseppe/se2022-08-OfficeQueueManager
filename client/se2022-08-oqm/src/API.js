@@ -1,5 +1,7 @@
 'use strict'
 
+import { Service, ServiceList } from "./Structs/serviceList";
+
 const URL = 'http://localhost:3001/api';
 
 //===========================================================================================
@@ -103,6 +105,13 @@ async function getAllServices() {
     const services = await response.json();
     let err = new Error();
     if (response.ok) {
+
+        /* If you want to use serviceList object
+        const serviceList = new ServiceList();
+        services.array.forEach(s => {
+            serviceList.addNewService(new Service(s.id,s.description, s.averagetime));
+        });
+        */
         return services;
     }
     else if (response.status === 500) {
