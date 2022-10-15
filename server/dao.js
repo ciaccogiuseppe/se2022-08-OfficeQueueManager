@@ -1,7 +1,6 @@
 'use strict';
 
 const sqlite = require('sqlite3');
-const crypto = require('crypto');
 
 /* Create new db instance */
 const db = new sqlite.Database('db.sqlite', (err) => {

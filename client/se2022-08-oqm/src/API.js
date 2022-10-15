@@ -124,6 +124,29 @@ async function getAllServices() {
     }
 }
 
+//delete
+async function deleteService(serviceid) {
+    const url = URL + `/service/${serviceid}`;
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            credentials: 'include',
+        });
+
+        if (response.ok) {
+            return true;
+        } else {
+            /* Application error (404, 500, 503 ...) */
+            const text = await response.text();
+            throw new TypeError(text);
+        }
+        
+    } catch (err) {
+        /* Network error */
+        throw err;
+    }
+}
+
 //===========================================================================================
 //          API for ticket
 //===========================================================================================
@@ -180,6 +203,29 @@ async function postCounter(counter) {
                 default: throw new TypeError(response.text);
             }
         }
+    } catch (err) {
+        /* Network error */
+        throw err;
+    }
+}
+
+//delete
+async function deleteCounter(counterid) {
+    const url = URL + `/counter/${counterid}`;
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            credentials: 'include',
+        });
+
+        if (response.ok) {
+            return true;
+        } else {
+            /* Application error (404, 500, 503 ...) */
+            const text = await response.text();
+            throw new TypeError(text);
+        }
+        
     } catch (err) {
         /* Network error */
         throw err;
@@ -248,5 +294,5 @@ async function deleteServicefromCounter(counterid,serviceid) {
 }
 
 
-const API = {deleteServicefromCounter,assignServicetoCounter, postCounter,postTicket,getAllServices,logOut,logIn,postService,getService};
+const API = {deleteCounter,deleteService,deleteServicefromCounter,assignServicetoCounter, postCounter,postTicket,getAllServices,logOut,logIn,postService,getService};
 export default API;
