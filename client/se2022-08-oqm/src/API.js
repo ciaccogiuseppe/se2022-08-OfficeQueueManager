@@ -186,5 +186,67 @@ async function postCounter(counter) {
     }
 }
 
-const API = {postCounter,postTicket,getAllServices,logOut,logIn,postService,getService};
+//===========================================================================================
+//          API for JOB 
+//===========================================================================================
+
+
+//post ASSIGN A SERVICE TO A COUNTER (post JOB)
+async function assignServicetoCounter(counterid,serviceid) {
+    const url = URL; // TO DO: Check server URL
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({'counterid':counterid,'serviceid':serviceid}),
+            credentials: 'include', 
+        });
+        if (response.ok) {
+            return response;
+        } else {
+            /* Application errors (500,422,...) */
+            switch (response.status){
+                case 500: throw new TypeError("500 INTERNAL SERVER ERROR");
+                case 422: throw new TypeError("422 UNPROCESSABLE ENTITY");
+                default: throw new TypeError(response.text);
+            }
+        }
+    } catch (err) {
+        /* Network error */
+        throw err;
+    }
+}
+
+//delete REMOVE A SERVICE FROM A COUNTER (delete JOB)
+async function deleteServicefromCounter(counterid,serviceid) {
+    const url = URL; // TO DO: Check server URL
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({'counterid':counterid,'serviceid':serviceid}),
+            credentials: 'include', 
+        });
+        if (response.ok) {
+            return response;
+        } else {
+            /* Application errors (500,422,...) */
+            switch (response.status){
+                case 500: throw new TypeError("500 INTERNAL SERVER ERROR");
+                case 422: throw new TypeError("422 UNPROCESSABLE ENTITY");
+                default: throw new TypeError(response.text);
+            }
+        }
+    } catch (err) {
+        /* Network error */
+        throw err;
+    }
+}
+
+
+const API = {deleteServicefromCounter,assignServicetoCounter, postCounter,postTicket,getAllServices,logOut,logIn,postService,getService};
 export default API;
