@@ -2,10 +2,38 @@
 
 const URL = 'http://localhost:3001/api';
 
+//===========================================================================================
+//          AUTHENTICATION API
+//===========================================================================================
+const logIn = async (credentials) => {
+    const url = URL + '/sessions'; // TO DO: Check server URL
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(credentials),
+    });
+    if (response.ok) {
+        const user = await response.json();
+        return user; //user's info
+    }
+    else {
+        const errDetails = await response.text();
+        throw errDetails;
+    }
+};
 
-
-
-
+const logOut = async () => {
+    // TO DO: Check server URL
+    const response = await fetch(URL + '/sessions/current', {
+        method: 'DELETE',
+        credentials: 'include'
+    });
+    if (response.ok)
+        return null;
+}
 
 
 
@@ -14,10 +42,60 @@ const URL = 'http://localhost:3001/api';
 //===========================================================================================
 
 //post
-//TODO
+async function postService(service) {
+    const url = URL; // TO DO: Check server URL
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(service),
+            credentials: 'include',
+        });
+        if (response.ok) {
+            return response;
+        } else {
+            /* Application errors (500,422,...) */
+            switch (response.status){
+                case 500: throw new TypeError("500 INTERNAL SERVER ERROR");
+                case 422: throw new TypeError("422 UNPROCESSABLE ENTITY");
+                default: throw new TypeError(response.text);
+            }
+        }
+    } catch (err) {
+        /* Network error */
+        throw err;
+    }
+}
 
-//get (one)
-//TODO
+//get
+async function getService(serviceid) {
+    const url = URL + '/services/' + serviceid; // TO DO: Check server URL
+
+    try {
+        const response = await fetch(url, {
+            credentials: 'include',
+        });
+        /* Fetch request accepted */
+        if (response.ok) {
+            const jsonservice = await response.json();
+            return jsonservice;
+            // TO DO: Map as a Service js object?
+
+        } else {
+            /* Application error (404, 500, 503 ...) */
+            switch (response.status){
+                case 500: throw new TypeError("500 INTERNAL SERVER ERROR");
+                case 422: throw new TypeError("422 UNPROCESSABLE ENTITY");
+                default: throw new TypeError(response.text);
+            }
+        }
+    } catch (err) {
+        /* Network error */
+        throw err;
+    }
+}
 
 //get all
 async function getAllServices() {
@@ -67,4 +145,37 @@ async function postTicket(ticket) {
 
 }
 
+//===========================================================================================
+//          API for COUNTER 
+//===========================================================================================
 
+//post
+async function postCounter(counter) {
+    const url = URL; // TO DO: Check server URL
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(counter),
+            credentials: 'include', 
+        });
+        if (response.ok) {
+            return response;
+        } else {
+            /* Application errors (500,422,...) */
+            switch (response.status){
+                case 500: throw new TypeError("500 INTERNAL SERVER ERROR");
+                case 422: throw new TypeError("422 UNPROCESSABLE ENTITY");
+                default: throw new TypeError(response.text);
+            }
+        }
+    } catch (err) {
+        /* Network error */
+        throw err;
+    }
+}
+
+const API = {postCounter,postTicket,getAllServices,logOut,logIn,postService,getService};
+export default API;
