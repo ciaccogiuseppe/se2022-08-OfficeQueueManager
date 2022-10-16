@@ -3,6 +3,8 @@
 const express = require('express');
 const morgan = require('morgan'); // logging middleware
 const cors = require('cors');
+const {check, validationResult} = require('express-validator');
+const dao = require('./dao');
 
 // init express
 const app = new express(); // FIXME: should we use new?
@@ -20,6 +22,12 @@ app.use(cors(corsOptions));
 // GET /api/services
 // return all the services
 app.get('/api/services', async (req,res) => {
+  
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({errors: errors.array()});
+  }
+
   try {
       const services = await dao.getServices();
       res.json(services);
@@ -34,9 +42,14 @@ app.post('/api/service', [
   check('description'.isLenghth({ min: 1}))
 ], async (req, res) => {
   
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({errors: errors.array()});
+  }
+
   const service = {
     description: req.body.description,
-    avarage_time: req.body.avarage_time,
+    avarageTime: req.body.avarageTime,
   }
 
   try{
@@ -50,8 +63,14 @@ app.post('/api/service', [
 // DELETE /api/service
 // delete a service given its id
 app.delete('/api/service/:id', async (req, res) => {
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({errors: errors.array()});
+  }
+
   try {
-    await dao.deleteService(req.params.id, req.user.id);
+    await dao.deleteService(req.params.id);
     res.status(204).end();
   } catch (err) {
     res.status(503).json({ error: `Database error during the cancellation of the service.` });
