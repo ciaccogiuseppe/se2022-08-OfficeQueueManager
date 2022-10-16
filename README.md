@@ -127,6 +127,68 @@
   }
   ```
 
+### Service
+
+- GET `/api/services`
+
+  - Description: Return an array containing all services
+  - Request body: _None_
+  - Response: `200 OK` (success)
+  - Error responses: `500 Internal Server Error` (generic error)
+  - Response body: An array of objects, containing all services with the description, the avarage time and the manager, or an error message in case of failure
+
+  ```
+  [
+    ...,
+    {
+      "idS": 1,
+      "description": "something",
+      "avarageTime": 10,
+      "idM": 1,
+    },
+    ...
+  ]
+  ```
+
+- POST `/api/service`
+
+  - Description: Create a new service
+  - Permissions allowed: Manager
+  - Request body: Description and the avarage time of the service
+
+  ```
+  {
+      "description": "something",
+      "avarageTime": 10,
+  }
+  ```
+
+  - Response: `201 OK` (Created)
+  - Error responses: `401 Unauthorized` (not logged in or wrong permissions), `422 Unprocessable Entity` (validation of request body failed) or `503 Internal Server Error` (generic error)
+  - Response body: An error message in case of failure
+
+  ```
+  {
+      "error": "message text"
+  }
+  ```
+
+- DELETE `/api/service/:id`
+
+  - Description: Delete a service receiving its id
+  - Permissions allowed: Manager
+  - Request header: req.params.id to retrieve id
+  - Request body: _None_
+  - Response: `204 No Content` (success)
+  - Error responses: `401 Unauthorized` (not logged in or wrong permissions), `422 Unprocessable Entity` (validation of id failed) or `503 Internal Server Error` (generic error)
+  - Response body: An error message in case of failure
+
+  ```
+  {
+      "error": "message text"
+  }
+  ```
+
 ## Database Tables
 
 - Table `Manager` - contains ID_Manager(primary key) nameM, surnameM, email, password, salt
@@ -140,3 +202,4 @@
 - There is already a Manager inside the table
   - email: mariorossi@po.it, password: password
 - The status of the table called Ticket can be open/close
+- All the primary key are autoincrement
