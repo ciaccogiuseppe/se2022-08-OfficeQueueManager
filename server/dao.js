@@ -32,11 +32,11 @@ exports.addService = (service, managerId) => {
     return new Promise((resolve, reject) => {
         const sql = 'INSERT INTO Service(description,ID_Manager, avarageTime) VALUES(?, ?, ?)';
         db.run(sql, [service.description, managerId, service.avarageTime], function (err) { 
-          if (err) {
-            reject(err);
-            return;
-          }
-          resolve();
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve();
         });
     });
 };
