@@ -3,24 +3,29 @@
 ## Usage
 
 ### Client
+
 - in client/se2022-08-oqm run `npm install`, then `npm start`
 
 ### Server
+
 - in server/ run `npm install`, then run `node index.js` or `nodemon index.js` if nodemon is installed
 
 ## Selected Technologies
 
 ### Frontend
+
 - React **18.2.0**
 - MUI **5.10.9**
 
 ### Backend
+
 - NodeJS **16.18**
 - Sqlite3 **5.1.2**
 - express **4.18.2**
 - passport **0.6.0**
 
 ### Testing
+
 - Mocha
 - Jest
 
@@ -96,8 +101,8 @@
   }
   ```
 
-  - Response: `200 OK` (success) 
-  - Error responses: `401 Unauthorized` (not logged in or wrong permissions), `404 Not Found` (Manager not found), `422 Unprocessable Entity` (validation of request body failed) or `503 Internal Server Error` (generic error)
+  - Response: `201 OK` (Created)
+  - Error responses: `401 Unauthorized` (not logged in or wrong permissions), `404 Not Found` (Manager not found), `422 Unprocessable Entity` (validation of request body failed) or `500 Internal Server Error` (generic error)
   - Response body: An error message in case of failure
 
   ```
@@ -131,6 +136,7 @@
 - Table `Ticket` - contains ID_Ticket(primary key), status, numTicket, ID_Service(foreign key)
 
 ### Notes
+
 - There is already a Manager inside the table
-    - email: mariorossi@po.it, password: password
+  - email: mariorossi@po.it, password: password
 - The status of the table called Ticket can be open/close

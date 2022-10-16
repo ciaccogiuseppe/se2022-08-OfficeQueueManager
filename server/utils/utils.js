@@ -10,3 +10,12 @@
 exports.errorFormatter = ({ location, msg, param }) => {
     return `${location}[${param}]: ${msg}`;
 };
+
+/**
+ * checks whether a given request comes from an authenticated user
+*/
+exports.isLoggedIn = (req, res, next) => {
+    if (req.isAuthenticated())
+        return next();
+    return res.status(401).json({ error: 'Not logged in' });
+}
