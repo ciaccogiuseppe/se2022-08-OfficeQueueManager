@@ -89,7 +89,7 @@ app.get('/api/services', async (req,res) => {
 // POST /api/service
 // define a new service
 app.post('/api/service', isLoggedIn, [
-  check('description'.isLenghth({ min: 1}))
+  check('description').isLenghth({ min: 1})
 ], async (req, res) => {
   
   const errors = validationResult(req);
