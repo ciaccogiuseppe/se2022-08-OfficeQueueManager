@@ -73,61 +73,6 @@ const isLoggedIn = (req, res, next) => {
   return res.status(401).json({ error: 'not authenticated'});
 }
 
-///////////////*API*//////////////////
-// GET /api/services
-// return all the services
-app.get('/api/services', async (req,res) => {
-
-  try {
-      const services = await dao.getServices();
-      res.json(services);
-  } catch(err) {
-      res.status(500).json({errors: `Database error while retrieving services`}).end();
-  }
-});
-
-// POST /api/service
-// define a new service
-app.post('/api/service', isLoggedIn, [
-  check('description'.isLenghth({ min: 1}))
-], async (req, res) => {
-  
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({errors: errors.array()});
-  }
-
-  const service = {
-    description: req.body.description,
-    avarageTime: req.body.avarageTime,
-  }
-
-  try{
-    await dao.addService(service, req.user.id);
-    res.status(201).end();
-  } catch(err) {
-    res.status(503).json({error: `Database error during the definition of a service`});
-  }
-});
-
-// DELETE /api/service
-// delete a service given its id
-app.delete('/api/service/:id', isLoggedIn, async (req, res) => {
-
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({errors: errors.array()});
-  }
-
-  try {
-    await dao.deleteService(req.params.id);
-    res.status(204).end();
-  } catch (err) {
-    res.status(503).json({ error: `Database error during the cancellation of the service.` });
-  }
-});
-
-
 //////*About the login and logout*////////
 app.post('/api/sessions', function(req, res, next) {
   passport.authenticate('local', (err, user, info) => {
