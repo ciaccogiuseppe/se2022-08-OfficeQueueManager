@@ -5,7 +5,7 @@ const sqlite = require('sqlite3');
 const crypto = require('crypto');
 
 // open the database
-const db = new sqlite.Database('indovinelli.sqlite', (err) => {
+const db = new sqlite.Database('OfficeQueueManagement.sqlite', (err) => {
     if(err) throw err;
   });
 
