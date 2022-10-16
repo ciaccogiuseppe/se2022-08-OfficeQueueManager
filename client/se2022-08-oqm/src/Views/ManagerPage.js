@@ -1,11 +1,42 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import {Link} from "react-router-dom";
+import {Link, useNavigate, Navigate} from "react-router-dom";
 
-function ManagerPage( {onLogout, token }) {
+function ManagerPage() {
+    const navigate = useNavigate();
+
+    const [authenticated, setauthenticated] = useState(
+        (localStorage.getItem("authenticated") || false)
+    );
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+
+        //logOut()
+        setauthenticated(false)
+        localStorage.setItem("authenticated", false);
+        navigate("/manager-login");
+        
+    }
     
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("authenticated");
+        if (loggedInUser) {
+          setauthenticated(loggedInUser);
+        }
+        console.log (authenticated)
+
+        if (!authenticated) {
+            console.log("cc")
+            navigate("/manager-login");
+        }
+    }, []);
+
+    
+    
+
     return (
         
         <div>
@@ -22,11 +53,11 @@ function ManagerPage( {onLogout, token }) {
                 <Button component={Link} to={"./assign"} variant="contained">Assign services to a counter</Button>
             </Grid>
             <Grid containers item sm marginTop={3}>
-                <Button onClick={onLogout} variant="outlined">Logout</Button>
+                <Button onClick={handleLogout} variant="outlined">Logout</Button>
             </Grid> 
         </div>
-    );
-}
+    )}
+
 
 export default ManagerPage;
 
