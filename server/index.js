@@ -17,7 +17,11 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+// declare routes
+const counterRoute = require('./routes/Counter.js');
 
+// apply routes
+app.use('/api', counterRoute);
 
 // Activate the server
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`));
