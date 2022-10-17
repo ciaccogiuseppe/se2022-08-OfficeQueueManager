@@ -3,13 +3,11 @@
 const express = require('express');
 const morgan = require('morgan'); // logging middleware
 const cors = require('cors');
-const {check, validationResult} = require('express-validator');
-const dao = require('./dao');
 
 const passport = require('passport'); // auth middleware
 const LocalStrategy = require('passport-local').Strategy; // username and password for login
 const session = require('express-session'); // enable sessions
-const managerDao = require('./manager-dao'); // module for accessing the manager in the DB
+const managerDao = require('./dao/ManagerDAO'); // module for accessing the manager in the DB
 
 // init express
 const app = new express(); // FIXME: should we use new?
@@ -65,68 +63,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// custom middleware: check if a given request is coming from an authenticated user
-const isLoggedIn = (req, res, next) => {
-  if(req.isAuthenticated())
-    return next();
-  
-  return res.status(401).json({ error: 'not authenticated'});
-}
-
 ///////////////*API*//////////////////
-// GET /api/services
-// return all the services
-app.get('/api/services', async (req,res) => {
+// declare routes
+const serviceRoute = require('./routes/Service.js');
 
-  try {
-      const services = await dao.getServices();
-      res.json(services);
-  } catch(err) {
-      res.status(500).json({errors: `Database error while retrieving services`}).end();
-  }
-});
-
-// POST /api/service
-// define a new service
-app.post('/api/service', isLoggedIn, [
-  check('description').isLength({ min: 1})
-], async (req, res) => {
-  
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({errors: errors.array()});
-  }
-
-  const service = {
-    description: req.body.description,
-    avarageTime: req.body.avarageTime,
-  }
-
-  try{
-    await dao.addService(service, req.user.id);
-    res.status(201).end();
-  } catch(err) {
-    res.status(503).json({error: `Database error during the definition of a service`});
-  }
-});
-
-// DELETE /api/service
-// delete a service given its id
-app.delete('/api/service/:id', isLoggedIn, async (req, res) => {
-
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({errors: errors.array()});
-  }
-
-  try {
-    await dao.deleteService(req.params.id);
-    res.status(204).end();
-  } catch (err) {
-    res.status(503).json({ error: `Database error during the cancellation of the service.` });
-  }
-});
-
+// apply routes
+app.use('/api', serviceRoute);
 
 //////*About the login and logout*////////
 app.post('/api/sessions', function(req, res, next) {

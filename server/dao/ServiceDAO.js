@@ -1,10 +1,6 @@
 'use strict';
 
-const sqlite = require('sqlite3');
-
-const db = new sqlite.Database('OfficeQueueManagement.sqlite', (err) => {
-    if(err) throw err;
-});
+const db = require('./db');
 
 exports.getServices = () => {
     return new Promise((resolve, reject) => {
@@ -24,6 +20,28 @@ exports.getServices = () => {
                 }
             ));
             resolve(services);
+        });
+    });
+};
+
+exports.getServicesById = (id) => {
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT * FROM Service WHERE ID_Service=?';
+        db.all(sql, [id], (err, rows) => {
+            if(err) {
+                reject(err);
+                return;
+            }
+
+            const service = rows.map((s) => (
+                {
+                    idS: s.ID_Service,
+                    description: s.description,
+                    avarageTime: s.avarageTime,
+                    idM: s.ID_Manager,
+                }
+            ));
+            resolve(service);
         });
     });
 };
