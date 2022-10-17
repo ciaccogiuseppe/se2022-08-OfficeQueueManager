@@ -14,6 +14,7 @@ exports.getServices = () => {
             const services = rows.map((s) => (
                 {
                     idS: s.ID_Service,
+                    name: s.name,
                     description: s.description,
                     avarageTime: s.avarageTime,
                     idM: s.ID_Manager,
@@ -36,6 +37,7 @@ exports.getServicesById = (id) => {
             const service = rows.map((s) => (
                 {
                     idS: s.ID_Service,
+                    name: s.name,
                     description: s.description,
                     avarageTime: s.avarageTime,
                     idM: s.ID_Manager,
@@ -48,8 +50,8 @@ exports.getServicesById = (id) => {
 
 exports.addService = (service, managerId) => {
     return new Promise((resolve, reject) => {
-        const sql = 'INSERT INTO Service(description,ID_Manager, avarageTime) VALUES(?, ?, ?)';
-        db.run(sql, [service.description, managerId, service.avarageTime], function (err) { 
+        const sql = 'INSERT INTO Service(description, ID_Manager, avarageTime, name) VALUES(?, ?, ?, ?)';
+        db.run(sql, [service.description, managerId, service.avarageTime, service.name], function (err) { 
             if (err) {
                 reject(err);
                 return;

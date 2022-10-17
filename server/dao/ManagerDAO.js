@@ -30,18 +30,24 @@ exports.getManager = (email, password) => {
     });
 };
 
-exports.getManagerById = (id) => {
+/**
+ * 
+ * @param {integer} managerId unique identifier of a must existing manager 
+ * @returns {Promise<[{ID_Manager, nameM, surnameM, email, password, salt}]>} an object presenting all fields of the Manager requested
+ */
+exports.getManagerById = (managerId) => {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT * FROM Manager WHERE ID_Manager = ?';
-            db.get(sql, [id], (err, row) => {
-            if (err) 
+        const sql = `SELECT * FROM Manager WHERE ID_Manager = ?`;
+        db.get(sql, [managerId], (err, row) => {
+            if (err)
                 reject(err);
             else if (row === undefined)
-                resolve({error: 'User not found.'});
+                resolve(null); // manager not found
             else {
-                // by default, the local strategy looks for "username": not to create confusion in server.js, we can create an object with that property
-                const user = {id: row.ID_Manager, username: row.email, nameM: row.nameM, surnameM: row.surnameM}
-                resolve(user);
+                const manager = {
+                    ID_Manager: row.ID_Manager, nameM: row.nameM, surnameM: row.surnameM, email: row.email, password: row.password, salt: row.salt
+                };
+                resolve(manager);
             }
         });
     });

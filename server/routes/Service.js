@@ -4,7 +4,7 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator'); // validation middleware
 const { isLoggedIn } = require('../utils/utils');
-const counterDao = require('../dao/CounterDAO');
+const serviceDao = require('../dao/ServiceDAO');
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ const router = express.Router();
 router.get('/services', async (req,res) => {
 
     try {
-        const services = await counterDao.getServices();
+        const services = await serviceDao.getServices();
         res.json(services);
     } catch(err) {
         res.status(500).json({errors: `Database error while retrieving services`}).end();
@@ -25,7 +25,7 @@ router.get('/services', async (req,res) => {
 router.get('/service/:id', async (req,res) => {
 
     try {
-        const service = await counterDao.getServicesById(req.params.id);
+        const service = await serviceDao.getServicesById(req.params.id);
         res.json(service);
     } catch(err) {
         res.status(500).json({errors: `Database error while retrieving the service`}).end();
@@ -44,12 +44,13 @@ router.post('/service', isLoggedIn, [
     }
   
     const service = {
+      name: req.body.name,
       description: req.body.description,
       avarageTime: req.body.avarageTime,
     }
   
     try{
-      await counterDao.addService(service, req.user.id);
+      await serviceDao.addService(service, req.user.id);
       res.status(201).end();
     } catch(err) {
       res.status(503).json({error: `Database error during the definition of a service`});
@@ -66,7 +67,7 @@ router.delete('/service/:id', isLoggedIn, async (req, res) => {
     }
   
     try {
-      await counterDao.deleteService(req.params.id);
+      await serviceDao.deleteService(req.params.id);
       res.status(204).end();
     } catch (err) {
       res.status(503).json({ error: `Database error during the cancellation of the service.` });
