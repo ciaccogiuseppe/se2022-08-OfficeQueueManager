@@ -1,13 +1,10 @@
 'use strict';
 /* Data Access Object (DAO) module for accessing users */
 
-const sqlite = require('sqlite3');
 const crypto = require('crypto');
 
 // open the database
-const db = new sqlite.Database('OfficeQueueManagement.sqlite', (err) => {
-    if(err) throw err;
-  });
+const db = require('./db');
 
 exports.getManager = (email, password) => {
     return new Promise((resolve, reject) => {
@@ -33,18 +30,19 @@ exports.getManager = (email, password) => {
     });
 };
 
-exports.getManagerById = (id) => {
+exports.getManagerById = (managerId) => {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT * FROM Manager WHERE ID_Manager = ?';
-            db.get(sql, [id], (err, row) => {
-            if (err) 
+        const sql = `SELECT * FROM Manager WHERE ID_Manager = ?`;
+        db.get(sql, [managerId], (err, row) => {
+            if (err)
                 reject(err);
             else if (row === undefined)
-                resolve({error: 'User not found.'});
+                resolve(null); // manager not found
             else {
-                // by default, the local strategy looks for "username": not to create confusion in server.js, we can create an object with that property
-                const user = {id: row.ID_Manager, username: row.email, nameM: row.nameM, surnameM: row.surnameM}
-                resolve(user);
+                const manager = {
+                    ID_Manager: row.ID_Manager, nameM: row.nameM, surnameM: row.surnameM, email: row.email, password: row.password, salt: row.salt
+                };
+                resolve(manager);
             }
         });
     });

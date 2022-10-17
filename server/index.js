@@ -3,13 +3,11 @@
 const express = require('express');
 const morgan = require('morgan'); // logging middleware
 const cors = require('cors');
-const {check, validationResult} = require('express-validator');
-const dao = require('./dao');
 
 const passport = require('passport'); // auth middleware
 const LocalStrategy = require('passport-local').Strategy; // username and password for login
 const session = require('express-session'); // enable sessions
-const managerDao = require('./manager-dao'); // module for accessing the manager in the DB
+const managerDao = require('./dao/ManagerDAO'); // module for accessing the manager in the DB
 
 // init express
 const app = new express(); // FIXME: should we use new?
@@ -65,13 +63,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// custom middleware: check if a given request is coming from an authenticated user
-const isLoggedIn = (req, res, next) => {
-  if(req.isAuthenticated())
-    return next();
-  
-  return res.status(401).json({ error: 'not authenticated'});
-}
 
 //////*About the login and logout*////////
 app.post('/api/sessions', function(req, res, next) {
