@@ -6,13 +6,13 @@ const db = require("./db");
 
 /**
  * 
- * @param {body,username} body contains counterid and serviceid; associated with username (managerid) allows to uniquely identify a Job
+ * @param {body,username} body contains counterId and serviceId; associated with username (managerid) allows to uniquely identify a Job
  * @returns {Promise<>} error object in case of error otherwise nothing
  */
-exports.addJob = (body,username) =>{
+exports.addJob = (counterId,serviceId,username) =>{
     return new Promise((resolve, reject) => {
         const sql = 'INSERT INTO Job (ID_Counter,ID_Service,ID_Manager) VALUES(?,?,?)';
-        db.run(sql, [body.counterid, body.serviceid, username], (err) => {
+        db.run(sql, [counterId, serviceId, username], (err) => {
             if (err) {
                 reject(err);
             } else {
@@ -30,7 +30,7 @@ exports.addJob = (body,username) =>{
 exports.removeJob = (jobid, username)=>{
     return new Promise((resolve, reject) => {
         const sql = 'DELETE FROM Job WHERE ID_Job = ? AND ID_Manager = ?';
-        db.run(sql, [jobid, username], (err) => {
+        db.run(sql, [jobId, username], (err) => {
             if (err) {
                 reject(err);
             } else {
@@ -39,3 +39,26 @@ exports.removeJob = (jobid, username)=>{
         });
     });
 }
+
+/**
+ * 
+ * @returns {Promise<[{ID_Job,ID_Counter,ID_Service,ID_Manager}]>} array of job objects with the relative fields 
+ */
+ exports.getJobs = () => {
+    return new Promise((resolve, reject) => {
+        const sql = `SELECT * FROM Job`;
+        db.all(sql, [], (err, rows) => {
+            if (err)
+                reject(err);
+            else {
+                const jobs = rows.map((row => ({
+                    ID_Job: row.ID_Job,
+                    ID_Counter: row.ID_Counter, 
+                    ID_Service: row.ID_Service,
+                    ID_Manager: row.ID_Manager
+                })));
+                resolve(jobs);
+            }
+        });
+    });
+};
