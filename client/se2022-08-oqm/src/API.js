@@ -1,6 +1,7 @@
 'use strict'
 
 import { Service, ServiceList } from "./utils/serviceList";
+import { Counter, CounterList } from "./utils/counterList";
 
 const URL = 'http://localhost:3001/api';
 
@@ -59,11 +60,8 @@ async function postService(service) {
             return response;
         } else {
             /* Application errors (500,422,...) */
-            switch (response.status){
-                case 500: throw new TypeError("500 INTERNAL SERVER ERROR");
-                case 422: throw new TypeError("422 UNPROCESSABLE ENTITY");
-                default: throw new TypeError(response.text);
-            }
+            const text = await response.text();
+            throw new TypeError(text);
         }
     } catch (err) {
         /* Network error */
@@ -87,11 +85,8 @@ async function getService(serviceid) {
 
         } else {
             /* Application error (404, 500, 503 ...) */
-            switch (response.status){
-                case 500: throw new TypeError("500 INTERNAL SERVER ERROR");
-                case 422: throw new TypeError("422 UNPROCESSABLE ENTITY");
-                default: throw new TypeError(response.text);
-            }
+            const text = await response.text();
+            throw new TypeError(text);
         }
     } catch (err) {
         /* Network error */
@@ -102,17 +97,15 @@ async function getService(serviceid) {
 //get all
 async function getAllServices() {
     const response = await fetch(URL + '/services');   //we have to agree on the API names
-    const services = await response.json();
     let err = new Error();
     if (response.ok) {
-
-        /* If you want to use serviceList object
+        const services = await response.json();
         const serviceList = new ServiceList();
-        services.array.forEach(s => {
-            serviceList.addNewService(new Service(s.id,s.description, s.averagetime));
+
+        services.forEach(s => {
+            serviceList.addNewService(new Service(s.ID_Service,s.description,s.ID_Manager, s.averagetime));
         });
-        */
-        return services;
+        return serviceList;
     }
     else if (response.status === 500) {
         err.message = "500 INTERNAL SERVER ERROR"
@@ -228,6 +221,7 @@ async function deleteCounter(counterid) {
 }
 
 //get 
+// Returns a CounterList containing an array of Counters
 async function getCounters() {
     const url = URL + '/counters';
 
@@ -238,7 +232,12 @@ async function getCounters() {
         /* Fetch request accepted */
         if (response.ok) {
             const jsoncounters = await response.json();
-            return jsoncounters;
+            const counterlist = new CounterList();
+            
+            jsoncounters.forEach((c)=>{
+                counterlist.addNewCounter(addNewCounter(c.ID_Counter,c.ID_Manager))
+            })
+            return counterlist;
 
         } else {
             /* Application error (404, 500, 503 ...) */
