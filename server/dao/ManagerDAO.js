@@ -1,8 +1,34 @@
 'use strict';
+/* Data Access Object (DAO) module for accessing users */
 
-/* Data Access Object (DAO) module for managing Managers */
+const crypto = require('crypto');
 
-const db = require("./db");
+// open the database
+const db = require('./db');
+
+exports.getManager = (email, password) => {
+    return new Promise((resolve, reject) => {
+      const sql = 'SELECT * FROM Manager WHERE email = ?';
+        db.get(sql, [email], (err, row) => {
+            if (err) { reject(err); }
+            else if (row === undefined) { resolve(false); }
+            else {
+                const user = {id: row.ID_Manager, username: row.email, nameM: row.nameM, surnameM: row.surnameM};
+                
+                const salt = row.salt;
+                crypto.scrypt(password, salt, 32, (err, hashedPassword) => {
+                    if (err) reject(err);
+
+                    const passwordHex = Buffer.from(row.password, 'hex');
+
+                    if(!crypto.timingSafeEqual(passwordHex, hashedPassword))
+                    resolve(false);
+                    else resolve(user); 
+                });
+            }
+        });
+    });
+};
 
 /**
  * 
@@ -26,4 +52,3 @@ exports.getManagerById = (managerId) => {
         });
     });
 };
-
