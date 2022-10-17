@@ -16,7 +16,9 @@ const router = express.Router();
 
 router.post('/job',
     // isLoggedIn, WAIT FOR AUTHENTICATION
-    check('ID_Manager').exists().isInt().toInt(),
+    check('ID_Counter').exists().isInt().toInt(),
+    check('ID_Service').exists().isInt().toInt(),
+
     async (req, res) => {
         // body validation
         const errors = validationResult(req).formatWith(errorFormatter);
