@@ -1,11 +1,10 @@
 
 import FirstPage from "../Views/FirstPage";
 import LoginManager from "../Views/LoginManager";
-import LoginOfficer from "../Views/LoginOfficer";
 import ManagerPage from "../Views/ManagerPage";
 import AddCounter from "../Views/AddCounter";
 import DefineService from "../Views/DefineService";
-
+import AssignServiceToCounter from "../Views/AssignServiceToCounter";
 
 
 export const routeIndex = [
@@ -20,13 +19,8 @@ export const routeIndex = [
         path: '/manager-login'
     },
     {
-        name: "Login Officer",
-        component: <LoginOfficer/>,
-        path: '/officer-login'
-    },
-    {
         name: "Manager Page",
-        component: <ManagerPage/>,
+        component: <ManagerPage />,
         path: '/manager'
     },
     {
@@ -38,6 +32,11 @@ export const routeIndex = [
         name: "Define Service",
         component: <DefineService/>,
         path: '/manager/defineservice'
+    },
+    {
+        name: "Assign services to a counter",
+        component: <AssignServiceToCounter/>,
+        path: '/manager/assign'
     }
 ]
 

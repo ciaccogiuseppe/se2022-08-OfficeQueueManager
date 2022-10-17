@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import '../App.css';
 import { routeIndex } from '../Route/route';
-import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 
 
 
 function App() {
+
 
   return (
     <div className="App">

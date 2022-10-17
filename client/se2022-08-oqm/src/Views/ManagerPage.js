@@ -1,41 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import {Link, useNavigate, Navigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import API from './API'
 
 function ManagerPage() {
     const navigate = useNavigate();
 
-    const [authenticated, setauthenticated] = useState(
-        (localStorage.getItem("authenticated") || false)
-    );
 
-    const handleLogout = (e) => {
+    const handleLogout = async (e) => {
         e.preventDefault();
-
-        //logOut()
-        setauthenticated(false)
-        localStorage.setItem("authenticated", false);
+        await API.logOut();
         navigate("/manager-login");
         
     }
-    
-    useEffect(() => {
-        const loggedInUser = localStorage.getItem("authenticated");
-        if (loggedInUser) {
-          setauthenticated(loggedInUser);
-        }
-        console.log (authenticated)
-
-        if (!authenticated) {
-            console.log("cc")
-            navigate("/manager-login");
-        }
-    }, []);
-
-    
-    
 
     return (
         
