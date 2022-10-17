@@ -26,7 +26,7 @@ router.post('/job',
             return res.status(422).json({ error: errors.array({}) });
 
         // check whether ID Manager, ID Counter and ID Service exists
-        const managerId = req.user.id;
+        const managerId = req.user.id; //express required 
         const counterId = req.body.ID_Counter;
         const serviceId = req.body.ID_Service;
         try {
@@ -41,8 +41,6 @@ router.post('/job',
             if(!counter.find(element => element.ID_Counter==counterId)){
                 return res.status(404).json({ error: `Specified counter not found` });
             }
-
-            // case: service not found MISSING DAO...
 
             // case: manager,counter found
             jobDao.addJob(counterId,serviceId,managerId)
@@ -67,10 +65,10 @@ async (req, res) => {
     const errors = validationResult(req).formatWith(errorFormatter);
     if (!errors.isEmpty())
         return res.status(422).json({ error: errors.array({}) });
-
-    jobDao.removeJob(req.params.id)
+        
+    jobDao.deleteJob(req.params.id)
         .then(() => res.status(204).json({ message: `Job successfully deleted` }))
-        .catch(() => res.status(500).json({ error: `Database error while deleting the Job` }));
+        .catch((e) => res.status(500).json({ error: `Database error while deleting the Job` }));
 });
 
 /////////////////////////////////////////////////////////////////////
@@ -80,7 +78,7 @@ async (req, res) => {
 // /api/jobs
 // Return an array containing all jobs
 router.get('/jobs', (req, res) => {
-    jobDao.getJobs
+    jobDao.getJobs()
         .then((counters) => res.status(200).json(counters))
         .catch(() => res.status(500).json({ error: `Database error while retrieving the jobs` }));
 });

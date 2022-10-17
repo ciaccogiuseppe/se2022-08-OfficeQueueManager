@@ -27,10 +27,10 @@ exports.addJob = (counterId,serviceId,username) =>{
  * @param {jobid,username} jobid associated with username (managerid) allows to uniquely identify a Job
  * @returns {Promise<>} error object in case of error otherwise nothing
  */
-exports.removeJob = (jobid, username)=>{
+exports.deleteJob = (jobid) =>{
     return new Promise((resolve, reject) => {
-        const sql = 'DELETE FROM Job WHERE ID_Job = ? AND ID_Manager = ?';
-        db.run(sql, [jobId, username], (err) => {
+        const sql = 'DELETE FROM Job WHERE ID_Job = ?';
+        db.run(sql, [jobid], (err) => {
             if (err) {
                 reject(err);
             } else {

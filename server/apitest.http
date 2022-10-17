@@ -1,0 +1,32 @@
+POST http://localhost:3001/api/job
+Content-Type: application/json
+
+{
+    "ID_Counter": 1,
+    "ID_Service": 1,
+    "ID_Manager": 1
+}
+###
+POST http://localhost:3001/api/job
+Content-Type: application/json
+
+{
+    "ID_Counter": 1,
+    "ID_Service": 1,
+    "ID_Manager": 2
+}
+###
+POST http://localhost:3001/api/job
+Content-Type: application/json
+
+{
+    "ID_Counter": 2,
+    "ID_Service": 1,
+    "ID_Manager": 1
+}
+###
+GET http://localhost:3001/api/jobs
+###
+DELETE http://localhost:3001/api/jobs/2
+###
+DELETE http://localhost:3001/api/jobs/1

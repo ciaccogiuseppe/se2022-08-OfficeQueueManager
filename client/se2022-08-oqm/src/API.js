@@ -182,7 +182,7 @@ async function postTicket(ticket) {
 //===========================================================================================
 
 //post
-async function postCounter(counter) {
+async function postCounter() {
     const url = URL+'/counter'; 
     try {
         const response = await fetch(url, {
@@ -190,7 +190,6 @@ async function postCounter(counter) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(counter),
             credentials: 'include', 
         });
         if (response.ok) {
