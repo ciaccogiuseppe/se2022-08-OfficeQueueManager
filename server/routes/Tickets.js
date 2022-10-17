@@ -5,7 +5,7 @@
  * @param {integer} nr number of people in queue for request type r
  * @param {Array} k_list number of different types of requests served by counter i
  * @param {Array} sr_list indicator equal to 1 if counter i can serve request r, 0 otherwise 
- * @returns {double} estimated waiting time (in minutes), -1 in csae of errors
+ * @returns estimated waiting time (in minutes), -1 in case of errors
  */
 estimateTime = function(tr, nr, k_list , sr_list){
 
@@ -43,6 +43,20 @@ estimateTime = function(tr, nr, k_list , sr_list){
     return tr * (nr/den + 1/2);
 }
 
+/**
+ * 
+ * @param {Number} minutes to be converted in mm:ss
+ * @returns minutes in mm:ss format (ceil estimate on seconds)
+ */
 decTimeToDeg = function(minutes){
-    return Math.floor(minutes) + ":" + (Math.ceil((minutes - Math.floor(minutes))*60));
+    if (!Number.isInteger(minutes) || minutes < 0){
+        return -1;
+    }
+    let mins = Math.floor(minutes);
+    let secs = Math.ceil((minutes - mins)*60);
+    mins = mins + ((secs >= 60) ? 1 : 0);
+    secs = secs % 60;
+    mins = mins > 9 ? mins : ("0" + mins);
+    secs = secs > 9 ? secs : ("0" + secs);
+    return mins + ":" + secs;
 }
