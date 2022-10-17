@@ -20,6 +20,9 @@ app.use(cors(corsOptions));
 // declare routes
 const counterRoute = require('./routes/Counter.js');
 
+// apply routes
+app.use('/api', counterRoute);
+
 // POST /api/job
 /* Creates a new Job, given the body and the logged Manager */
 app.post('/api/job', async (req, res) => {
@@ -44,6 +47,7 @@ app.delete('/api/job', async (req, res) => {
       return res.status(503).json({ error: err });
   }
 });
+
 
 
 // Activate the server
