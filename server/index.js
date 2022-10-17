@@ -24,6 +24,7 @@ app.use(cors(corsOptions));
 
 // declare routes
 const counterRoute = require('./routes/Counter.js');
+const jobRoute = require('./routes/Job.js');
 
 /*** Set up Passport ***/
 //set up the "username and password" login strategy
@@ -67,6 +68,7 @@ app.use(passport.session());
 
 // apply routes
 app.use('/api', counterRoute);
+app.use('/api', jobRoute);
 
 //////*About the login and logout*////////
 app.post('/api/sessions', function(req, res, next) {
