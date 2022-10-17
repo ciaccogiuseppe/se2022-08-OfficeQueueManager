@@ -193,7 +193,7 @@
 
 - Table `Manager` - contains ID_Manager(primary key) nameM, surnameM, email, password, salt
 - Table `Counter` - contains ID_Counter(primary key), ID_Manager(foreign key)
-- Table `Service` - contains ID_Service(primary key), description, avarage_time, ID_Manager(foreign key)
+- Table `Service` - contains ID_Service(primary key), name, description, avarage_time, ID_Manager(foreign key)
 - Table `Job` - contains ID_Job(primary key), ID_Manager(foreign key), ID_Counter(foreign key), ID_Service(foreign key)
 - Table `Ticket` - contains ID_Ticket(primary key), status, numTicket, ID_Service(foreign key)
 
