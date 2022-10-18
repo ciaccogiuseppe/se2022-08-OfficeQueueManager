@@ -1,6 +1,6 @@
 'use strict';
 
-const { estimateTime, decTimeToDeg } = require('../routes/Tickets');
+const { estimateTime, decTimeToDeg } = require('../utils/timeEstimation.js');
 
 // TEST SUITE: ESTIMATE TIME
 describe('estimateTimeTests', () => {
