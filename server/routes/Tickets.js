@@ -9,6 +9,12 @@
  */
 estimateTime = function (tr, nr, k_list, sr_list) {
 
+    if (tr == null || tr == undefined ||
+        nr == null || nr == undefined ||
+        k_list == null || k_list == undefined ||
+        sr_list == null || sr_list == undefined){
+            return 1;
+        }
     if (k_list.length == 0 || sr_list.length == 0 || k_list.length != sr_list.length) {
         return -1;
     }
@@ -49,7 +55,7 @@ estimateTime = function (tr, nr, k_list, sr_list) {
  * @returns minutes in mm:ss format (ceil estimate on seconds)
  */
 decTimeToDeg = function (minutes) {
-    if (!Number.isInteger(minutes) || minutes < 0) {
+    if (minutes == null || minutes == undefined || isNaN(minutes) || minutes < 0) {
         return -1;
     }
     let mins = Math.floor(minutes);
