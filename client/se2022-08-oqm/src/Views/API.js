@@ -1,6 +1,6 @@
 'use strict'
 
-import { Service, ServiceList } from "../Structs/serviceList";
+import { Service, ServiceList } from "../utils/serviceList";
 
 const URL = 'http://localhost:3001/api';
 
