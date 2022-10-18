@@ -135,13 +135,37 @@
   - Request body: _None_
   - Response: `200 OK` (success)
   - Error responses: `500 Internal Server Error` (generic error)
-  - Response body: An array of objects, containing all services with the description, the avarage time and the manager, or an error message in case of failure
+  - Response body: An array of objects, containing all services with the name, the description, the avarage time and the manager, or an error message in case of failure
 
   ```
   [
     ...,
     {
       "idS": 1,
+      "name"; "something",
+      "description": "something",
+      "avarageTime": 10,
+      "idM": 1,
+    },
+    ...
+  ]
+  ```
+
+- GET `/api/service/:id`
+
+  - Description: Return an array containing the service with a specific ID_Service
+  - Request header: req.params.id to retrieve id
+  - Request body: _None_
+  - Response: `200 OK` (success)
+  - Error responses: `500 Internal Server Error` (generic error)
+  - Response body: An array of objects, containing all services with the name, the description, the avarage time and the manager, or an error message in case of failure
+
+  ```
+  [
+    ...,
+    {
+      "idS": 1,
+      "name"; "something",
       "description": "something",
       "avarageTime": 10,
       "idM": 1,
