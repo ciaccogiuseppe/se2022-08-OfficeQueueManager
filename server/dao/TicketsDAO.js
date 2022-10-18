@@ -35,12 +35,12 @@ exports.getNumberActiveTicketsByServiceId = (serviceId) => {
 exports.addTicket = (serviceId) => {
     return new Promise((resolve, reject) => {
         const sql = `INSERT INTO Ticket (ID_Service) VALUES (?) RETURNING ID_Ticket`;
-        db.run(sql, [serviceId], (err,row)=> {
+        db.get(sql, [serviceId], (err,row)=> {
             if (err)
                 reject(err);
             else
             {
-                const ticketId = row;
+                const ticketId = row.ID_Ticket;
                 resolve(ticketId);
             }
                 

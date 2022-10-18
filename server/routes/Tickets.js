@@ -17,8 +17,8 @@ const router = express.Router();
 //////                          GET                            //////
 /////////////////////////////////////////////////////////////////////
 
-// /api/counters
-// Return an array containing all counters
+// /api/ticket/:serviceId
+// Return estimated waiting time for a certain service id
 router.get('/ticket/:serviceId', 
     check('serviceId').exists().isInt().toInt(), 
     
@@ -29,7 +29,7 @@ router.get('/ticket/:serviceId',
             return res.status(500).json({ error: errors.array({}) });
     let nr = await ticketDao.getNumberActiveTicketsByServiceId(serviceId);
     let service = await serviceDao.getServicesById(serviceId);
-    let tr = await service[0].avarageTime;
+    let tr = service[0] && service[0].avarageTime;
     let list = (await jobDao.getJobs()).
         reduce((a,b) => {
         let found = false;
@@ -50,8 +50,42 @@ router.get('/ticket/:serviceId',
       }, []);
       let k_list = list.map(a=>a.Serv_Counter);
       let sr_list = list.map(a=>a.Can_Serve);
-
-      res.status(200).json({"time":decTimeToDeg(estimateTime(tr, nr, k_list, sr_list))})
+      let time = decTimeToDeg(estimateTime(tr, nr, k_list, sr_list));
+      if(time != -1)
+        res.status(200).json({"time":time});
+      else
+        res.status(500).json({ error: `Internal server error` });
 });
+
+/////////////////////////////////////////////////////////////////////
+//////                          POST                           //////
+/////////////////////////////////////////////////////////////////////
+
+// /api/ticket
+// Create a new ticket
+router.post('/ticket',
+    // isLoggedIn, WAIT FOR AUTHENTICATION
+    async (req, res) => {
+        // body validation
+        const errors = validationResult(req).formatWith(errorFormatter);
+        if (!errors.isEmpty())
+            return res.status(422).json({ error: errors.array({}) });
+
+        // check whether ID Manager exists
+        const serviceId = req.body.serviceID;
+        try {
+            const service = await serviceDao.getServicesById(serviceId);
+            // case: manager not found
+            if (!service[0]) {
+                return res.status(404).json({ error: `Specified service not found` });
+            }
+            // case: manager found
+            ticketDao.addTicket(serviceId)
+                .then((ticketID) => res.status(201).json({ "ticketID": ticketID }))
+                .catch(() => res.status(500).json({ error: `Database error while saving the service` }));
+        } catch (error) {
+            return res.status(500).json({ error: `Error while retrieving manager information` });
+        }
+    });
 
 module.exports = router;
