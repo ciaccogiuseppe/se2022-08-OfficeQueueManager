@@ -61,94 +61,110 @@ export default function AssignServiceToCounter() {
 
     return(
         <>
-            <Typography variant="h4" marginTop={15} >
-                Assign services to a counter
-            </Typography>
-            <Box>
-                <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    <Grid item xs={2}></Grid>
+        <Grid container>
+                <Grid item xs={2}></Grid>
+                <Grid item xs={8}>
+                    <Paper elevation={3}>
 
-                    <Grid item xs={4}>
-                        <Paper elevation={3} >
 
-                            <Typography variant="h5" marginTop={3} gutterBottom>
-                                <br/>Select the service(s) to assign
-                            </Typography>
 
-                            <Grid container>
-                                <Grid item xs={4}></Grid>
-                                <Grid item xs={4}>
-                                    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                                        {listServices.map((value) => { 
-                                            const labelId = `checkbox-list-label-${value}`;
-                                            return(
-                                                <ListItem key={value} disablePadding >
-                                                <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
-                                                <ListItemIcon>
-                                                    <Checkbox edge="start" checked={checked.indexOf(value) !== -1} tabIndex={-1} disableRipple inputProps={{ 'aria-labelledby': labelId }} />
-                                                </ListItemIcon>
-                                                <ListItemText id={labelId} primary={`${value}`} />
-                                                </ListItemButton>
-                                            </ListItem>
-                                            );
-                                        })}
-                                    </List>
+                        <Typography variant="h4" marginTop={5} >
+                            <br/>Assign services to a counter
+                        </Typography>
+                        <Box>
+                            <Grid container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                <Grid item xs={1}></Grid>
+
+                                <Grid item xs={5}>
+                                    <Paper elevation={3} >
+
+                                        <Typography variant="h5" marginTop={3} gutterBottom>
+                                            <br/>Select the service(s) to assign
+                                        </Typography>
+
+                                        <Grid container>
+                                            <Grid item xs={4}></Grid>
+                                            <Grid item xs={4}>
+                                                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                                                    {listServices.map((value) => { 
+                                                        const labelId = `checkbox-list-label-${value}`;
+                                                        return(
+                                                            <ListItem key={value} disablePadding >
+                                                            <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
+                                                            <ListItemIcon>
+                                                                <Checkbox edge="start" checked={checked.indexOf(value) !== -1} tabIndex={-1} disableRipple inputProps={{ 'aria-labelledby': labelId }} />
+                                                            </ListItemIcon>
+                                                            <ListItemText id={labelId} primary={`${value}`} />
+                                                            </ListItemButton>
+                                                        </ListItem>
+                                                        );
+                                                    })}
+                                                </List>
+                                            </Grid>
+                                            <Grid item xs={4}></Grid>
+                                        </Grid>
+
+                                        <Typography variant="h5" gutterBottom>
+                                            <br/>
+                                        </Typography>
+                                    
+                                    </Paper>
                                 </Grid>
-                                <Grid item xs={4}></Grid>
-                            </Grid>
 
-                            <Typography variant="h5" gutterBottom>
-                                <br/>
-                            </Typography>
-                          
-                        </Paper>
-                    </Grid>
+                                <Grid item xs={5} >
+                                    <Paper elevation={3} >
 
-                    <Grid item xs={4} >
-                        <Paper elevation={3} >
+                                        <Typography variant="h5" marginTop={3} gutterBottom>
+                                            <br/>Select a counter
+                                        </Typography>
 
-                            <Typography variant="h5" marginTop={3} gutterBottom>
-                                <br/>Select a counter
-                            </Typography>
+                                        <Grid container>
+                                            <Grid item xs={4}></Grid>
+                                            <Grid item xs={4}>
 
-                            <Grid container>
-                                <Grid item xs={4}></Grid>
-                                <Grid item xs={4}>
+                                                <FormControl>
+                                                    <RadioGroup value={counterValue} onChange={handleChange}>
+                                                        {listCounters.map((value) => { 
+                                                                return(
+                                                                    <FormControlLabel value={value} control={<Radio />} label={value}/>
+                                                                );
+                                                        })}
+                                                    </RadioGroup>
+                                                </FormControl>
+                                                        
+                                            </Grid>
+                                            <Grid item xs={4}></Grid>
+                                        </Grid>
 
-                                    <FormControl>
-                                        <RadioGroup value={counterValue} onChange={handleChange}>
-                                            {listCounters.map((value) => { 
-                                                    return(
-                                                        <FormControlLabel value={value} control={<Radio />} label={value}/>
-                                                    );
-                                            })}
-                                        </RadioGroup>
-                                    </FormControl>
-                                            
+                                        <Typography variant="h5" gutterBottom>
+                                            <br/>
+                                        </Typography>
+
+                                    </Paper>
                                 </Grid>
-                                <Grid item xs={4}></Grid>
+
+                                <Grid item xs={1}></Grid>
+                                
+
                             </Grid>
+                        </Box>
+                        
+                        <Grid containers item sm>
+                            <Grid containers item sm marginTop={5}>
+                                <Button variant="contained" onClick={handleSubmit}>Assign</Button>
+                            </Grid>
+                            <Grid containers item sm marginTop={5}>
+                                <Button component={Link} to={"/manager"} variant="contained">Go back</Button>
+                            </Grid>
+                        </Grid>
 
-                            <Typography variant="h5" gutterBottom>
-                                <br/>
-                            </Typography>
 
-                        </Paper>
-                    </Grid>
-
-                    <Grid item xs={2}></Grid>
-                    
-
+                        <Typography variant="h5" gutterBottom>
+                            <br/>
+                        </Typography>
+                    </Paper>
                 </Grid>
-            </Box>
-            
-            <Grid containers item sm>
-                <Grid containers item sm marginTop={5}>
-                    <Button variant="contained" onClick={handleSubmit}>Assign</Button>
-                </Grid>
-                <Grid containers item sm marginTop={5}>
-                    <Button component={Link} to={"/manager"} variant="contained">Go back</Button>
-                </Grid>
+                <Grid item xs={2}></Grid>
             </Grid>
 
         </>
