@@ -218,11 +218,11 @@
 
   - Response: `201 OK` (Created)
   - Error responses: `401 Unauthorized` (not logged in or wrong permissions), `422 Unprocessable Entity` (validation of request body failed) or `503 Internal Server Error` (generic error)
-  - Response body: An error message in case of failure
+  - Response body: Ticket ID/An error message in case of failure
 
   ```
   {
-      "error": "message text"
+      "ticketID": 23
   }
   ```
 

@@ -7,8 +7,8 @@ const db = require("./db");
 
 /**
  * 
- * @param {integer} serviceId unique identifier of a must existing manager 
- * @returns {Promise<[count]>} an object presenting all fields of the Manager requested
+ * @param {integer} serviceId unique identifier of a must existing service 
+ * @returns {Promise<[count]>} count of open tickets for a certain service
  */
 exports.getNumberActiveTicketsByServiceId = (serviceId) => {
     return new Promise((resolve, reject) => {
@@ -22,6 +22,28 @@ exports.getNumberActiveTicketsByServiceId = (serviceId) => {
                 const ticketCount = row.count;
                 resolve(ticketCount);
             }
+        });
+    });
+};
+
+
+/**
+ * 
+ * @param {integer} serviceId unique identifier of a must existing service 
+ * @returns {Promise<>} ticket ID
+ */
+exports.addTicket = (serviceId) => {
+    return new Promise((resolve, reject) => {
+        const sql = `INSERT INTO Ticket (ID_Service) VALUES (?) RETURNING ID_Ticket`;
+        db.run(sql, [serviceId], (err,row)=> {
+            if (err)
+                reject(err);
+            else
+            {
+                const ticketId = row;
+                resolve(ticketId);
+            }
+                
         });
     });
 };
