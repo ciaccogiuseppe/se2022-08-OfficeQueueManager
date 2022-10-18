@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>33/33</span>
+                <span class='fraction'>35/35</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.73% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>36/38</span>
+                <span class='fraction'>50/50</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>29/29</span>
+                <span class='fraction'>31/31</span>
             </div>
         
             
@@ -126,12 +126,24 @@
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
 <a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">26x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -177,16 +189,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
@@ -200,6 +212,12 @@
  */
 estimateTime = function (tr, nr, k_list, sr_list) {
 &nbsp;
+    if (tr == null || tr == undefined ||
+        nr == null || nr == undefined ||
+        k_list == null || k_list == undefined ||
+        sr_list == null || sr_list == undefined){
+            return 1;
+        }
     if (k_list.length == 0 || sr_list.length == 0 || k_list.length != sr_list.length) {
         return -1;
     }
@@ -240,15 +258,15 @@ estimateTime = function (tr, nr, k_list, sr_list) {
  * @returns minutes in mm:ss format (ceil estimate on seconds)
  */
 decTimeToDeg = function (minutes) {
-    if (!Number.isInteger(minutes) || minutes &lt; 0) {
+    if (minutes == null || minutes == undefined || isNaN(minutes) || minutes &lt; 0) {
         return -1;
     }
     let mins = Math.floor(minutes);
     let secs = Math.ceil((minutes - mins) * 60);
-    mins = mins + ((secs &gt;= 60) ? <span class="branch-0 cbranch-no" title="branch not covered" >1 </span>: 0);
+    mins = mins + ((secs &gt;= 60) ? 1 : 0);
     secs = secs % 60;
     mins = mins &gt; 9 ? mins : ("0" + mins);
-    secs = secs &gt; 9 ? <span class="branch-0 cbranch-no" title="branch not covered" >secs </span>: ("0" + secs);
+    secs = secs &gt; 9 ? secs : ("0" + secs);
     return mins + ":" + secs;
 }
 &nbsp;
@@ -259,7 +277,7 @@ module.exports = { estimateTime, decTimeToDeg };</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-10-18T13:09:28.894Z
+                at 2022-10-18T14:36:04.517Z
             </div>
         <script src="prettify.js"></script>
         <script>

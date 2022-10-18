@@ -14,7 +14,7 @@ describe('estimateTimeTests', () => {
             expect(estimateTime(0, 1, [1], [1])).toBe(-1);
         });
         test('T3: tr equals -inf', () => {
-            expect(estimateTime(Number.MIN_VALUE, 1, [1], [1])).toBe(-1);
+            expect(estimateTime(Number.NEGATIVE_INFINITY, 1, [1], [1])).toBe(-1);
         });
         test('T4: nr not integer', () => {
             expect(estimateTime(1, "PLUTO", [1], [1])).toBe(-1);
@@ -23,7 +23,7 @@ describe('estimateTimeTests', () => {
             expect(estimateTime(1, -1, [1], [1])).toBe(-1);
         });
         test('T6: nr equals -inf', () => {
-            expect(estimateTime(1, Number.MIN_VALUE, [1], [1])).toBe(-1);
+            expect(estimateTime(1, Number.NEGATIVE_INFINITY, [1], [1])).toBe(-1);
         });
         test('T7: klist partially integer v1', () => {
             expect(estimateTime(1, 0, [0, "pippo", true, 2], [1, 1, 1, 1])).toBe(-1);
@@ -41,7 +41,7 @@ describe('estimateTimeTests', () => {
             expect(estimateTime(1, 1, [-1], [1])).toBe(-1);
         });
         test('T12: klist -inf value', () => {
-            expect(estimateTime(1, 1, [Number.MIN_VALUE], [1])).toBe(-1);
+            expect(estimateTime(1, 1, [Number.NEGATIVE_INFINITY], [1])).toBe(-1);
         });
         test('T13: klist values all 0', () => {
             expect(estimateTime(1, 1, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0])).toBe(-1);
@@ -56,7 +56,7 @@ describe('estimateTimeTests', () => {
             expect(estimateTime(1, 1, [0, 1, 0, 1], 1)).toBe(-1);
         });
         test('T17: srlist negative values with boundaries', () => {
-            expect(estimateTime(1, 1, [0, 2, 0, 0], [Number.MIN_VALUE, Number.MIN_VALUE, 1, 0])).toBe(-1);
+            expect(estimateTime(1, 1, [0, 2, 0, 0], [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY, 1, 0])).toBe(-1);
         });
         test('T18: srlist values all 0', () => {
             expect(estimateTime(1, 1, [0, 2, 3, 1], [0, 0, 0, 0])).toBe(-1);
@@ -69,6 +69,9 @@ describe('estimateTimeTests', () => {
         });
         test('T25: klist and srlist different length', () => {
             expect(estimateTime(1, 1, [1, 0, 200], [1, 0])).toBe(-1);
+        });
+        test('T26: everything undefined', () => {
+            expect(estimateTime(undefined, undefined, undefined, undefined)).toBe(-1);
         });
     });
 
@@ -119,7 +122,7 @@ describe('decTimeToDegTests', () => {
             expect(decTimeToDeg(-1)).toBe(-1);
         });
         test('T4: negative param v2', () => {
-            expect(decTimeToDeg(Number.MIN_VALUE)).toBe(-1);
+            expect(decTimeToDeg(Number.NEGATIVE_INFINITY)).toBe(-1);
         });
     });
 
@@ -133,6 +136,9 @@ describe('decTimeToDegTests', () => {
         });
         test('T7: working test case v3', () => {
             expect(decTimeToDeg(Number.MAX_VALUE)).toBe(Number.MAX_VALUE + ":00");
+        });
+        test('T8: working test case v4', () => {
+            expect(decTimeToDeg(0.99999999)).toBe("01:00");
         });
     });
 });
