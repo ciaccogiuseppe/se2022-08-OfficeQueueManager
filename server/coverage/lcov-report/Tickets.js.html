@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">72.72% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>24/33</span>
+                <span class='fraction'>33/33</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">73.68% </span>
+                <span class="strong">94.73% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>28/38</span>
+                <span class='fraction'>36/38</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.96% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/29</span>
+                <span class='fraction'>29/29</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -177,16 +177,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
@@ -239,17 +239,17 @@ estimateTime = function (tr, nr, k_list, sr_list) {
  * @param {Number} minutes to be converted in mm:ss
  * @returns minutes in mm:ss format (ceil estimate on seconds)
  */
-decTimeToDeg = <span class="fstat-no" title="function not covered" >fu</span>nction (minutes) {
-<span class="cstat-no" title="statement not covered" >    if (!Number.isInteger(minutes) || minutes &lt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >        return -1;</span>
+decTimeToDeg = function (minutes) {
+    if (!Number.isInteger(minutes) || minutes &lt; 0) {
+        return -1;
     }
-    let mins = <span class="cstat-no" title="statement not covered" >Math.floor(minutes);</span>
-    let secs = <span class="cstat-no" title="statement not covered" >Math.ceil((minutes - mins) * 60);</span>
-<span class="cstat-no" title="statement not covered" >    mins = mins + ((secs &gt;= 60) ? 1 : 0);</span>
-<span class="cstat-no" title="statement not covered" >    secs = secs % 60;</span>
-<span class="cstat-no" title="statement not covered" >    mins = mins &gt; 9 ? mins : ("0" + mins);</span>
-<span class="cstat-no" title="statement not covered" >    secs = secs &gt; 9 ? secs : ("0" + secs);</span>
-<span class="cstat-no" title="statement not covered" >    return mins + ":" + secs;</span>
+    let mins = Math.floor(minutes);
+    let secs = Math.ceil((minutes - mins) * 60);
+    mins = mins + ((secs &gt;= 60) ? <span class="branch-0 cbranch-no" title="branch not covered" >1 </span>: 0);
+    secs = secs % 60;
+    mins = mins &gt; 9 ? mins : ("0" + mins);
+    secs = secs &gt; 9 ? <span class="branch-0 cbranch-no" title="branch not covered" >secs </span>: ("0" + secs);
+    return mins + ":" + secs;
 }
 &nbsp;
 module.exports = { estimateTime, decTimeToDeg };</pre></td></tr></table></pre>
@@ -259,7 +259,7 @@ module.exports = { estimateTime, decTimeToDeg };</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-10-18T10:32:33.955Z
+                at 2022-10-18T13:09:28.894Z
             </div>
         <script src="prettify.js"></script>
         <script>

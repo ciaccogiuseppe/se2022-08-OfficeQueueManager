@@ -103,3 +103,37 @@ describe('estimateTimeTests', () => {
     });
 });
 
+
+// TEST SUITE: decTimeToDeg
+describe('decTimeToDegTests', () => {
+
+    describe('invalidCases', () => {
+        // Tests
+        test('T1: not number v1', () => {
+            expect(decTimeToDeg(null)).toBe(-1);
+        });
+        test('T2: not number v2', () => {
+            expect(decTimeToDeg("Pippo")).toBe(-1);
+        });
+        test('T3: negative param v1', () => {
+            expect(decTimeToDeg(-1)).toBe(-1);
+        });
+        test('T4: negative param v2', () => {
+            expect(decTimeToDeg(Number.MIN_VALUE)).toBe(-1);
+        });
+    });
+
+    describe('validCases', () => {
+        // Tests
+        test('T5: working test case v1', () => {
+            expect(decTimeToDeg(0)).toBe("00:00");
+        });
+        test('T6: working test case v2', () => {
+            expect(decTimeToDeg(1237.75647)).toBe("1237:46");
+        });
+        test('T7: working test case v3', () => {
+            expect(decTimeToDeg(Number.MAX_VALUE)).toBe(Number.MAX_VALUE + ":00");
+        });
+    });
+});
+
