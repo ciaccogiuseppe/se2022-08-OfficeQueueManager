@@ -189,6 +189,43 @@
   }
   ```
 
+### Tickets
+- GET `/api/ticket/:serviceId`
+
+  - Description: Return estimated waiting time for a specific service
+  - Request body: _None_
+  - Response: `200 OK` (success)
+  - Error responses: `500 Internal Server Error` (generic error)
+  - Response body: Estimated waiting time in mm:ss format
+
+  ```
+  {
+    "time": "10:20"
+  }
+  ```
+
+- POST `/api/ticket`
+
+  - Description: Create a new ticket
+  - Permissions allowed: Manager, Officer
+  - Request body: Service ID
+
+  ```
+  {
+      "serviceID": 10
+  }
+  ```
+
+  - Response: `201 OK` (Created)
+  - Error responses: `401 Unauthorized` (not logged in or wrong permissions), `422 Unprocessable Entity` (validation of request body failed) or `503 Internal Server Error` (generic error)
+  - Response body: An error message in case of failure
+
+  ```
+  {
+      "error": "message text"
+  }
+  ```
+
 ## Database Tables
 
 - Table `Manager` - contains ID_Manager(primary key) nameM, surnameM, email, password, salt
