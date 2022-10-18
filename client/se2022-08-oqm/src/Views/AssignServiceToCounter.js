@@ -26,7 +26,7 @@ export default function AssignServiceToCounter() {
     const listServices = ['serv1','serv2','serv3', 'serv4', 'serv5']
     const listCounters = ['count1','count2','count3', 'count4', 'count5']
     const [checked, setChecked] = useState([]);
-    const [counterValue, setValue] = React.useState(listCounters[0]);
+    const [counterValue, setValue] = useState(listCounters[0]);
 
 
 
@@ -51,12 +51,15 @@ export default function AssignServiceToCounter() {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(checked)
-
-        checked.map((serviceValue) => API.assignServicetoCounter(counterValue,serviceValue).then(
+        if (checked.length !== 0){
+            checked.map((serviceValue) => API.assignServicetoCounter(counterValue,serviceValue).then(
                 window.alert(serviceValue+' assigned to '+ counterValue)
             )
         );
+        } else {
+            window.alert("Please select at least one service.")
+        }
+        
     } 
 
     return(
