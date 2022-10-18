@@ -12,7 +12,7 @@ estimateTime = function (tr, nr, k_list, sr_list) {
         nr == null || nr == undefined ||
         k_list == null || k_list == undefined ||
         sr_list == null || sr_list == undefined){
-            return 1;
+            return -1;
         }
     if (k_list.length == 0 || sr_list.length == 0 || k_list.length != sr_list.length) {
         return -1;
