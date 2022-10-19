@@ -13,7 +13,7 @@ function ServiceTable(props){
                 <TableRow
                   key={row.id}
                   onClick={() => props.setSelected(row)}
-                  active={selected && row.id === selected.id /*a selected object exists, and his id is equal to the current one.*/}
+                  active={selected && row.id === props.selected.id /*a selected object exists, and his id is equal to the current one.*/}
                 >
                   <TableCell component="tr" scope="row">
                     {row.name} 

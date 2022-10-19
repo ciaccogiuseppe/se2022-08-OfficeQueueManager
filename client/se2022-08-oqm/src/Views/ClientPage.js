@@ -13,6 +13,9 @@ function ClientPage() {
     
     return (
         <div>
+            <Grid containers item sm marginTop={5}>
+                <Button component={Link} to={"/"} variant="contained">Go back</Button>
+            </Grid>
             <Typography variant="h4" marginTop={30} gutterBottom>
                 Client Page
             </Typography>
