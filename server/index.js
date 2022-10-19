@@ -70,8 +70,7 @@ app.use(passport.session());
 const serviceRoute = require('./routes/Service.js');
 const counterRoute = require('./routes/Counter.js');
 const jobRoute = require('./routes/Job.js');
-const ticketRoute = require('./routes/Tickets');
-
+const ticketRoute = require('./routes/Tickets.js');
 
 // apply routes
 app.use('/api', serviceRoute);

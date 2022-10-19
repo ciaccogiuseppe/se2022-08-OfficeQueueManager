@@ -67,24 +67,24 @@ router.post('/ticket',check('serviceID').exists().isInt().toInt(),
     // isLoggedIn, WAIT FOR AUTHENTICATION
     async (req, res) => {
         // body validation
-        const errors = validationResult(req).formatWith(errorFormatter);
+        /*const errors = validationResult(req).formatWith(errorFormatter);
         if (!errors.isEmpty())
-            return res.status(422).json({ error: errors.array({}) });
+            return res.status(422).json({ error: errors.array({}) });*/
 
         // check whether ID Manager exists
         const serviceId = req.body.serviceID;
         try {
             const service = await serviceDao.getServicesById(serviceId);
-            // case: manager not found
+            // case: service not found
             if (!service[0]) {
                 return res.status(404).json({ error: `Specified service not found` });
             }
-            // case: manager found
+            // case: service found
             ticketDao.addTicket(serviceId)
                 .then((ticketID) => res.status(201).json({ "ticketID": ticketID }))
                 .catch(() => res.status(500).json({ error: `Database error while saving the service` }));
         } catch (error) {
-            return res.status(500).json({ error: `Error while retrieving manager information` });
+            return res.status(500).json({ error: `Error while retrieving information` });
         }
     });
 

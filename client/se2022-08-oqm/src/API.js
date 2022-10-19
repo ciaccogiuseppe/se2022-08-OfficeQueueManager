@@ -86,7 +86,7 @@ async function getService(serviceid) {
         /* Fetch request accepted */
         if (response.ok) {
             const jsonservice = await response.json();
-            return new Service(jsonservice.idS,jsonservice.description,jsonservice.idM,jsonservice.avarageTime,jsonservice.name);
+            return new Service(jsonservice.idS,jsonservice.description,jsonservice.avarageTime,jsonservice.name);
 
         } else {
             /* Application error (404, 500, 503 ...) */
