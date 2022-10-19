@@ -41,3 +41,6 @@ Content-Type: application/json
 {
     "serviceID": 2
 }
+###
+GET http://localhost:3001/api/ticket/2
+###

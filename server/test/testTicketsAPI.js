@@ -48,7 +48,12 @@ describe('test TicketAPI',()=>{
     // OK : New Ticket issued
     testPOSTTicket({"serviceID":2},201);
 
+    /*******  GET  *******/
+    // Wrong body 
+    testGETTicketTime(3,{},500); // If Service ID doesn't exists, it returns 500 
+    testGETTicketTime("ServiceName",{},422);
 
+    testGETTicketTime(2,{"time":"test"},200);
 
 
 
