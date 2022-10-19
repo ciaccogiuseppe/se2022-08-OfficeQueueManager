@@ -45,7 +45,7 @@ exports.getManagerById = (managerId) => {
                 resolve(null); // manager not found
             else {
                 const manager = {
-                    ID_Manager: row.ID_Manager, nameM: row.nameM, surnameM: row.surnameM, email: row.email, password: row.password, salt: row.salt
+                    id: row.ID_Manager, nameM: row.nameM, surnameM: row.surnameM, email: row.email, password: row.password, salt: row.salt
                 };
                 resolve(manager);
             }
