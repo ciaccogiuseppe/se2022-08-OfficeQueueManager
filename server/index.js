@@ -107,9 +107,9 @@ app.get('/api/sessions/current', (req, res) => {  if(req.isAuthenticated()) {
 
 // apply routes
 app.use('/api', ticketRoute);
+app.use('/api', serviceRoute);
 
 app.use(isLoggedIn); //this will protect all the following API
-app.use('/api', serviceRoute);
 app.use('/api', counterRoute);
 app.use('/api', jobRoute);
 

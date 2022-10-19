@@ -49,8 +49,8 @@ describe('test CounterAPI',()=>{
 
     /****** POST ******/
     // Wrong body, validation errors
-    testPOSTCounter({"ID_Manager": "Antonello"},422);
-    testPOSTCounter({"Manager_ID": 1},422);
+    //testPOSTCounter({"ID_Manager": "Antonello"},422);
+    //testPOSTCounter({"Manager_ID": 1},422);
 
     // Missing manager 
     testPOSTCounter({"ID_Manager": 5},404);

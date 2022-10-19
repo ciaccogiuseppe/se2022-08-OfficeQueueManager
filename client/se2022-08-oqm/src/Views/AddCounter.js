@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import {Link} from "react-router-dom";
 import Paper from "@mui/material/Paper";
-
+import API from '../API';
 
 
 
@@ -17,11 +17,8 @@ export default function AddCounter() {
         e.preventDefault();
         if (countername){
             window.alert("Counter added.")
-            /*
-            postCounter(countername).then(
-                window.alert("Counter added.")
-            )
-            */
+            API.postCounter();
+
         } else {
             window.alert("Please enter a counter name.")
         }

@@ -6,8 +6,7 @@ import TextField from "@mui/material/TextField";
 import {Link} from "react-router-dom";
 import Paper from "@mui/material/Paper";
 
-//import {Service, ServiceList} from "../utils/serviceList";
-//import API from './API'
+import API from '../API'
 
 
 
@@ -22,24 +21,15 @@ export default function DefineService() {
         if ((serviceID) && (serviceDescription) && (serviceTime)){
             console.log(serviceDescription, serviceID, serviceTime)
             window.alert("Service defined.")
-            setServiceDescription(null)
-            setServiceID(null)
-            setServiceTime(null)
 
-            
-            /*
-            var service = new Service ({serviceID}, {serviceDescription}, {serviceTime})
-            ServiceList.addNewService(service)
-            API.postService(service).then(
-                window.alert("Service defined.")
-            )*/
+            API.postService(serviceID,serviceDescription,serviceTime);
+
+
             
         } else {
             console.log(serviceDescription, serviceID, serviceTime)
             window.alert("Please complete all the fields.")
-            setServiceDescription(null)
-            setServiceID(null)
-            setServiceTime(null)
+
         }
         
     } 

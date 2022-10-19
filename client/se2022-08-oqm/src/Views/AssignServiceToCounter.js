@@ -14,7 +14,9 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import API from './API'
+import API from '../API';
+import { useEffect } from 'react';
+
 
 
 import {Link} from "react-router-dom";
@@ -23,12 +25,33 @@ import {Link} from "react-router-dom";
 
 
 export default function AssignServiceToCounter() {
-    const listServices = ['serv1','serv2','serv3', 'serv4', 'serv5']
-    const listCounters = ['count1','count2','count3', 'count4', 'count5']
+    const [listServices,setlistServices] = useState([]);
+    const [listCounters,setlistCounters] = useState([]);
     const [checked, setChecked] = useState([]);
-    const [counterValue, setValue] = useState(listCounters[0]);
+    const [counterValue, setValue] = useState([]);
 
+    useEffect(() => {
+        getAllServices();
+        getAllCounters();
+      },[])
 
+      async function getAllServices() {
+          try {
+            const library = await API.getAllServices();
+            setlistServices(library.ServiceList);
+          } catch (err) {
+            throw (err);
+          }
+      }
+
+      async function getAllCounters() {
+        try {
+          const library = await API.getCounters();
+          setlistCounters(library.CounterList);
+        } catch (err) {
+          throw (err);
+        }
+    }
 
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -52,8 +75,8 @@ export default function AssignServiceToCounter() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (checked.length !== 0){
-            checked.map((serviceValue) => API.assignServicetoCounter(counterValue,serviceValue).then(
-                window.alert(serviceValue+' assigned to '+ counterValue)
+            checked.map((serviceValue) => API.assignServicetoCounter(counterValue,serviceValue.id).then(
+                window.alert(serviceValue.name+' assigned to counter '+ counterValue)
             )
         );
         } else {
@@ -92,12 +115,12 @@ export default function AssignServiceToCounter() {
                                                     {listServices.map((value) => { 
                                                         const labelId = `checkbox-list-label-${value}`;
                                                         return(
-                                                            <ListItem key={value} disablePadding >
+                                                            <ListItem key={value.id} disablePadding >
                                                             <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
                                                             <ListItemIcon>
                                                                 <Checkbox edge="start" checked={checked.indexOf(value) !== -1} tabIndex={-1} disableRipple inputProps={{ 'aria-labelledby': labelId }} />
                                                             </ListItemIcon>
-                                                            <ListItemText id={labelId} primary={`${value}`} />
+                                                            <ListItemText id={labelId} primary={`${value.name}`} />
                                                             </ListItemButton>
                                                         </ListItem>
                                                         );
@@ -129,7 +152,7 @@ export default function AssignServiceToCounter() {
                                                     <RadioGroup value={counterValue} onChange={handleChange}>
                                                         {listCounters.map((value) => { 
                                                                 return(
-                                                                    <FormControlLabel value={value} control={<Radio />} label={value}/>
+                                                                    <FormControlLabel value={value.id} control={<Radio />} label={value.id}/>
                                                                 );
                                                         })}
                                                     </RadioGroup>
