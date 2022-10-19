@@ -12,61 +12,69 @@ function TicketPage(props) {
     const [selected, setSelected] = React.useState(false);
     const [xTime, setXTime] = React.useState(0);
 
-    
-    React.useEffect( () => {
+
+    React.useEffect(() => {
         const loadServices = async () => {
-          //const s = await API.getAllServices();
-          //debug
-          const s = mockList;
+            //const s = await API.getAllServices();
+            //debug
+            const s = mockList;
 
-          setServices(() => s);
+            setServices(() => s);
         }
-        loadServices();      
+        loadServices();
     }, []);
-    
-    
 
-    React.useEffect( () => {
-            const expectedTime = async () => {
-              const t = await API.getXTime(selected);
-              setXTime(() => t);
-            }
+
+
+    React.useEffect(() => {
+        const expectedTime = async () => {
+            const t = await API.getXTime(selected);
+            setXTime(() => t);
+        }
+        if(selected){
             expectedTime();
+        }
     }, [selected.id]);
 
     const print = async (service) => {
-        //await API.postTicket(/* to define */);
+        const ticket = await API.postTicket(service);
 
-        const ticket = "ticket";
-    
         console.log("Print ticket:");
         console.log(ticket);
     }
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
-                <Grid item xs={4}>
-                    <ServiceTable services={services} selected={selected} setSelected={setSelected} />
+        <>
+            <Typography variant="h1" gutterBottom>
+                Office Queue Manager
+            </Typography>
+            <Typography variant="h5" gutterBottom>
+                Select a service among the available ones, look how much you will wait and get your ticket!
+            </Typography>
+            <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={4}>
+                        <ServiceTable services={services} selected={selected} setSelected={setSelected} />
+                    </Grid>
+                    <Grid item xs={8}>
+                        <Typography variant="h3" gutterBottom>
+                            {selected ? selected.name : false}
+                        </Typography>
+                        <Typography variant="h5" gutterBottom>
+                            {selected ? selected.description : false}
+                        </Typography>
+                        <Typography variant="h5" gutterBottom bgcolor='red'>
+                            {selected ? "Expected time to wait: " + xTime : false}
+                        </Typography>
+                        {selected ?
+                            <Grid container item>
+                                <Button variant="contained" onClick={() => setSelected(false)} sx={{ margin: 1 }}>Cancel</Button>
+                                <Button variant="contained" onClick={() => print(selected)} color="success" sx={{ margin: 1 }}>Get ticket</Button>
+                            </Grid> : false}
+                    </Grid>
                 </Grid>
-                <Grid item xs={8}>
-                    <Typography variant="h3" gutterBottom>
-                        {selected ? selected.name : false}
-                    </Typography>
-                    <Typography variant="h5" gutterBottom>
-                        {selected ? selected.description : false}
-                    </Typography>
-                    <Typography variant="h5" gutterBottom bgcolor='red'>
-                        {selected ? "Expected time to wait: " + xTime : false}
-                    </Typography>
-                    { selected ? 
-                    <Grid container item>
-                        <Button variant="contained" onClick={() => setSelected(false)} sx={{margin:1}}>Cancel</Button>
-                        <Button variant="contained" onClick={() => print(selected)} color="success" sx={{margin:1}}>Get ticket</Button>
-                    </Grid> : false}
-                </Grid>
-            </Grid>
-        </Box>
+            </Box>
+        </>
     );
 }
 
