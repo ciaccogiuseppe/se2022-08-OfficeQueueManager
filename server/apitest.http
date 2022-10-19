@@ -32,3 +32,12 @@ GET http://localhost:3001/api/counters
 DELETE http://localhost:3001/api/jobs/2
 ###
 DELETE http://localhost:3001/api/jobs/1
+###
+GET http://localhost:3001/api/service/2
+###
+POST http://localhost:3001/api/ticket
+Content-Type: application/json
+
+{
+    "serviceID": 2
+}

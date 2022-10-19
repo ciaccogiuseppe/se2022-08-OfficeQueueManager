@@ -70,12 +70,14 @@ app.use(passport.session());
 const serviceRoute = require('./routes/Service.js');
 const counterRoute = require('./routes/Counter.js');
 const jobRoute = require('./routes/Job.js');
+const ticketRoute = require('./routes/Tickets');
+
 
 // apply routes
 app.use('/api', serviceRoute);
-// apply routes
 app.use('/api', counterRoute);
 app.use('/api', jobRoute);
+app.use('/api', ticketRoute);
 
 //////*About the login and logout*////////
 app.post('/api/sessions', function(req, res, next) {

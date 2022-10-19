@@ -63,7 +63,7 @@ router.get('/ticket/:serviceId',
 
 // /api/ticket
 // Create a new ticket
-router.post('/ticket',
+router.post('/ticket',check('serviceID').exists().isInt().toInt(),
     // isLoggedIn, WAIT FOR AUTHENTICATION
     async (req, res) => {
         // body validation
