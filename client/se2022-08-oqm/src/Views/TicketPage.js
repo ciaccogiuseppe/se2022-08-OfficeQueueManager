@@ -15,9 +15,11 @@ function TicketPage(props) {
 
     React.useEffect(() => {
         const loadServices = async () => {
-            const s = await API.getAllServices();
+            //const s = await API.getAllServices();
+            
             //debug
-            //const s = mockList;
+            const s = mockList;
+
             console.log(s);
             setServices(() => s);
         }
@@ -39,6 +41,9 @@ function TicketPage(props) {
 
     const print = async (service) => {
         const ticket = await API.postTicket(service);
+
+        //debug
+        //const ticket = 23;
 
         console.log("Print ticket:");
         console.log(ticket);

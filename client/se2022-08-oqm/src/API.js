@@ -111,8 +111,12 @@ async function getAllServices() {
         const services = await response.json();
         const serviceList = new ServiceList();
 
+        console.log("services");
+        console.log(services);
+
         services.forEach(s => {
-            serviceList.addNewService(new Service(s.idS,s.description,s.idM,s.avarageTime,s.name));
+            serviceList.addNewService(new Service(s.idS,s.description,s.avarageTime,s.name));
+            console.log(serviceList);
         });
         return serviceList;
     }

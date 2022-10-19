@@ -7,12 +7,12 @@ import TableRow from '@mui/material/TableRow';
 
 function ServiceTable(props){ 
     //props.services is a serviceList object
-    //props.selected is the service object selected or undefined
+    //props.selected is the service object selected or false
     //props.setSelected is the callback to select a service
 
     return (
         <TableContainer>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table aria-label="simple table">
             <TableBody>
               {props.services ? props.services.ServiceList.map((row) => (
                 <TableRow

@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
+import Box from '@mui/material/Box';
 
 
 function ClientPage() {
@@ -21,14 +22,12 @@ function ClientPage() {
                         <Typography variant="h4" marginTop={10} gutterBottom>
                             Client Page
                         </Typography>
-                        <Grid container>
-                            <Grid containers marginTop={7} marginBottom={3} item sm>
-                                <Button component={Link} to={"/client/ticket"} variant="contained">Get a ticket</Button>
+                        <Box>
+                            <Grid marginTop={5} marginBottom={3} item >
+                                <Button component={Link} to={"/client/ticket"} variant="contained" sx={{ 'margin': 3 }}>Get a ticket</Button>
+                                <Button component={Link} to={"/client/mainboard"} variant="contained" sx={{ 'margin': 3 }}>Main Board</Button>
                             </Grid>
-                            <Grid containers marginTop={7} marginBottom={3} item sm>
-                                <Button component={Link} to={"/client/mainboard"} variant="contained">Main Board</Button>
-                            </Grid>
-                        </Grid>
+                        </Box>
                     </Paper>
                 </Grid>
             </Grid>
