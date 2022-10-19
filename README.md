@@ -178,11 +178,10 @@
 
   - Description: Create a new service
   - Permissions allowed: Manager
-  - Request body: Name, description and the avarage time of the service
+  - Request body: Description and the avarage time of the service
 
   ```
   {
-      "name"; "something",
       "description": "something",
       "avarageTime": 10,
   }
