@@ -15,13 +15,14 @@ function TicketPage(props) {
 
     React.useEffect(() => {
         const loadServices = async () => {
-            //const s = await API.getAllServices();
+            const s = await API.getAllServices();
             //debug
-            const s = mockList;
-
+            //const s = mockList;
+            console.log(s);
             setServices(() => s);
         }
         loadServices();
+        console.log("services loaded");
     }, []);
 
 
@@ -80,10 +81,10 @@ function TicketPage(props) {
 
 //debug
 const mockList = new ServiceList();
-mockList.addNewService(new Service(1, "Service 1", "Consists in service 1", 5));
-mockList.addNewService(new Service(2, "Service 2", "Consists in service 2", 10));
-mockList.addNewService(new Service(3, "Service 3", "Consists in service 3", 15));
-mockList.addNewService(new Service(4, "Service 4", "Consists in service 4", 20));
-mockList.addNewService(new Service(5, "Service 5", "Consists in service 5", 25));
+mockList.addNewService(new Service(1, "Consists in service 1", 5, "Service 1"));
+mockList.addNewService(new Service(2, "Consists in service 2", 10, "Service 2"));
+mockList.addNewService(new Service(3, "Consists in service 3", 15, "Service 3"));
+mockList.addNewService(new Service(4, "Consists in service 4", 20, "Service 4"));
+mockList.addNewService(new Service(5, "Consists in service 5", 25, "Service 5"));
 
 export default TicketPage;
