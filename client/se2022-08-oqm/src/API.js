@@ -160,7 +160,7 @@ async function postTicket(service) {
     const response = await fetch(URL + '/ticket', { //we have to agree on the API names
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: { "serviceID" : service.id }
+        body: JSON.stringify({ "serviceID" : service.id })
     })
     if (response.ok) {
         return response.ticketID;
