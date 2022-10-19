@@ -4,12 +4,13 @@
  * @param {string} description
  * @param {int} averagetime 
  */
-function Service(id,description,averagetime,name){
+function Service(id,name,description,averagetime,managerid){
     this.id = id;
+    this.name = name;
     this.description = description;
     this.averagetime = averagetime;
-    this.name = name;
-}
+    this.managerid = managerid;
+    }
 function ServiceList(){
     this.ServiceList = [];
     this.addNewService = (Service) => {this.ServiceList.push(Service)}

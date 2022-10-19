@@ -13,19 +13,22 @@ function TicketPage(props) {
     const [xTime, setXTime] = React.useState(0);
 
 
-    React.useEffect(() => {
+    React.useEffect( () => {
         const loadServices = async () => {
-            //const s = await API.getAllServices();
+            const s = await API.getAllServices();
             
             //debug
-            const s = mockList;
+            //const s = mockList;
 
             console.log(s);
             setServices(() => s);
         }
-        loadServices();
-        console.log("services loaded");
-    }, []);
+        console.log(services);
+        if(services === false){
+            loadServices();
+            console.log("services loaded");
+        }
+    }, [services]);
 
 
 
