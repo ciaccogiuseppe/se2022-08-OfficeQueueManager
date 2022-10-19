@@ -20,13 +20,10 @@ function TicketPage(props) {
             //debug
             //const s = mockList;
 
-            console.log(s);
             setServices(() => s);
         }
-        console.log(services);
         if(services === false){
             loadServices();
-            console.log("services loaded");
         }
     }, [services]);
 

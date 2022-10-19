@@ -86,7 +86,7 @@ async function getService(serviceid) {
         /* Fetch request accepted */
         if (response.ok) {
             const jsonservice = await response.json();
-            return new Service(jsonservice.idS,jsonservice.name,jsonservice.description,jsonservice.avarageTime,jsonservice.idM);
+            return new Service(jsonservice.idS,jsonservice.description,jsonservice.idM,jsonservice.avarageTime,jsonservice.name);
 
         } else {
             /* Application error (404, 500, 503 ...) */
@@ -111,12 +111,8 @@ async function getAllServices() {
         const services = await response.json();
         const serviceList = new ServiceList();
 
-        console.log("services");
-        console.log(services);
-
         services.forEach(s => {
-            serviceList.addNewService(new Service(s.idS,s.description,s.avarageTime,s.name));
-            console.log(serviceList);
+            serviceList.addNewService(new Service(s.idS,s.description,s.idM,s.avarageTime,s.name));
         });
         return serviceList;
     }
