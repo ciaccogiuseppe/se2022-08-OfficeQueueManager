@@ -184,19 +184,24 @@ async function postTicket(service) {
 }
 
 async function getXTime(service) {
-    let err = new Error();
-    const response = await fetch(URL + '/ticket/' + service.id);
-    if (response.ok) {
-        return response.time;
-    }
-    else if (response.status === 500) {
-        err.message = "500 GENERIC ERROR";
-        console.log(err);
-        throw err;
-    }
-    else {
-        err.message = "OTHER ERROR"
-        console.log(err);
+    const url = URL + '/ticket/' + service; 
+
+    try {
+        const response = await fetch(url, {
+            credentials: 'include',
+        });
+        /* Fetch request accepted */
+        if (response.ok) {
+            const resp = await response.json();
+            return resp.time;
+
+        } else {
+            /* Application error (404, 500, 503 ...) */
+            const text = await response.text();
+            throw new TypeError(text);
+        }
+    } catch (err) {
+        /* Network error */
         throw err;
     }
 }

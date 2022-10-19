@@ -16,10 +16,6 @@ function TicketPage(props) {
     React.useEffect( () => {
         const loadServices = async () => {
             const s = await API.getAllServices();
-            
-            //debug
-            //const s = mockList;
-
             setServices(() => s);
         }
         if(services === false){
@@ -30,14 +26,15 @@ function TicketPage(props) {
 
 
     React.useEffect(() => {
-        const expectedTime = async () => {
-            const t = await API.getXTime(selected);
-            setXTime(() => t);
-        }
         if(selected){
             expectedTime();
         }
     }, [selected.id]);
+
+    const expectedTime = async () => {
+        const t = await API.getXTime(selected.id);
+        setXTime(t);
+    }
 
     const print = async (service) => {
         const ticket = await API.postTicket(service);
