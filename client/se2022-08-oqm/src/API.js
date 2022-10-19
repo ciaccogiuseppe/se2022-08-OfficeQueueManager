@@ -2,6 +2,7 @@
 
 import { Service, ServiceList } from "./utils/serviceList";
 import { Counter, CounterList } from "./utils/counterList";
+import {Job, JobList} from "./utils/jobList";
 
 const URL = 'http://localhost:3001/api';
 
@@ -9,7 +10,7 @@ const URL = 'http://localhost:3001/api';
 //          AUTHENTICATION API
 //===========================================================================================
 const logIn = async (credentials) => {
-    const url = URL + '/sessions'; // TO DO: Check server URL
+    const url = URL + '/sessions'; 
     const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -29,7 +30,6 @@ const logIn = async (credentials) => {
 };
 
 const logOut = async () => {
-    // TO DO: Check server URL
     const response = await fetch(URL + '/sessions/current', {
         method: 'DELETE',
         credentials: 'include'
@@ -45,15 +45,19 @@ const logOut = async () => {
 //===========================================================================================
 
 //post
-async function postService(service) {
-    const url = URL+''; //TO DO: URl
+// Create a new service given name, description and average time
+async function postService(name, description, avarageTime) {
+    const url = URL+'/service';
     try {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(service),
+            body: JSON.stringify(   {"name": name,
+                                    "description": description, 
+                                    "avarageTime":avarageTime}
+                                ),
             credentials: 'include',
         });
         if (response.ok) {
@@ -69,9 +73,10 @@ async function postService(service) {
     }
 }
 
-//get
+//get 
+//return a Service object given its id 
 async function getService(serviceid) {
-    const url = URL + '/services/' + serviceid; // TO DO: Check server URL
+    const url = URL + '/service/' + serviceid; 
 
     try {
         const response = await fetch(url, {
@@ -80,8 +85,7 @@ async function getService(serviceid) {
         /* Fetch request accepted */
         if (response.ok) {
             const jsonservice = await response.json();
-            return jsonservice;
-            // TO DO: Map as a Service js object?
+            return new Service(jsonservice.idS,jsonservice.description,jsonservice.idM,jsonservice.avarageTime,jsonservice.name);
 
         } else {
             /* Application error (404, 500, 503 ...) */
@@ -95,15 +99,19 @@ async function getService(serviceid) {
 }
 
 //get all
+// Return a list containing Services objects  
 async function getAllServices() {
-    const response = await fetch(URL + '/services');   //we have to agree on the API names
+    const url = URL + '/services'; 
+    const response = await fetch(url, { 
+        credentials: 'include',
+    });   
     let err = new Error();
     if (response.ok) {
         const services = await response.json();
         const serviceList = new ServiceList();
 
         services.forEach(s => {
-            serviceList.addNewService(new Service(s.ID_Service,s.description,s.ID_Manager, s.averagetime));
+            serviceList.addNewService(new Service(s.idS,s.description,s.idM,s.avarageTime,s.name));
         });
         return serviceList;
     }
@@ -118,6 +126,7 @@ async function getAllServices() {
 }
 
 //delete
+// Delete a service given its id
 async function deleteService(serviceid) {
     const url = URL + `/service/${serviceid}`;
     try {
@@ -235,7 +244,7 @@ async function getCounters() {
             const counterlist = new CounterList();
             
             jsoncounters.forEach((c)=>{
-                counterlist.addNewCounter(addNewCounter(c.ID_Counter,c.ID_Manager))
+                counterlist.addNewCounter(new Counter(c.ID_Counter,c.ID_Manager));
             })
             return counterlist;
 
@@ -255,10 +264,10 @@ async function getCounters() {
 //===========================================================================================
 
 
-/*
-post 
-Assign a Service to a Counter (post JOB)
-*/
+
+//post 
+//Assign a Service to a Counter (post JOB)
+
 async function assignServicetoCounter(counterid,serviceid) {
     const url = URL+'/job';
     try {
@@ -284,7 +293,8 @@ async function assignServicetoCounter(counterid,serviceid) {
     }
 }
 
-//delete REMOVE A SERVICE FROM A COUNTER (delete JOB)
+//delete 
+// Remove a Service from a Counter
 async function deleteServicefromCounter(jobid) {
     const url = URL+`/jobs/${jobid}`; 
     try {
@@ -308,6 +318,36 @@ async function deleteServicefromCounter(jobid) {
     }
 }
 
+//get 
+//return a list containing all the Jobs 
+async function getJobs() {
+    const url = URL + '/jobs';
 
-const API = {getCounters,deleteCounter,deleteService,deleteServicefromCounter,assignServicetoCounter, postCounter,postTicket,getAllServices,logOut,logIn,postService,getService};
+    try {
+        const response = await fetch(url, {
+            credentials: 'include',
+        });
+        /* Fetch request accepted */
+        if (response.ok) {
+            const jsonjobs = await response.json();
+            const joblist = new JobList();
+            
+            jsonjobs.forEach((j)=>{
+                joblist.addNewJob(new Job(j.ID_Job,j.ID_Counter,j.ID_Service,j.ID_Manager));
+            })
+            return joblist;
+
+        } else {
+            /* Application error (404, 500, 503 ...) */
+            const text = await response.text();
+            throw new TypeError(text);
+        }
+    } catch (err) {
+        /* Network error */
+        throw err;
+    }
+}
+
+
+const API = {getJobs,getCounters,deleteCounter,deleteService,deleteServicefromCounter,assignServicetoCounter, postCounter,postTicket,getAllServices,logOut,logIn,postService,getService};
 export default API;

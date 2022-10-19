@@ -249,6 +249,67 @@
       "ticketID": 23
   }
   ```
+### Job
+
+- GET `/api/jobs`
+
+  - Description: Return an array containing all jobs
+  - Request body: _None_
+  - Response: `200 OK` (success)
+  - Error responses: `500 Internal Server Error` (generic error)
+  - Response body: An array of jobs, containing job identifier, counters identifier, services identifier and manager identifier who associate they , or an error message in case of failure
+
+  ```
+  [
+    ...,
+    {
+      "ID_Job": 2,
+      "ID_Counter": 1,
+      "ID_Service": 5,
+      "ID_Manager": 2
+    },
+    ...
+  ]
+  ```
+
+- POST `/api/job`
+
+  - Description: Create a new job
+  - Permissions allowed: Manager
+  - Request body: Counter ID, Service ID 
+
+  ```
+  {
+      "ID_Counter": 1,
+      "ID_Service": 5
+  }
+  ```
+
+  - Response: `201 OK` (Created)
+  - Error responses: `401 Unauthorized` (not logged in or wrong permissions), `404 Not Found` (Manager not found, Counter not found, Service not found) , `422 Unprocessable Entity` (validation of request body failed) or `500 Internal Server Error` (generic error)
+  - Response body: An error message in case of failure
+
+  ```
+  {
+      "error": "message text"
+  }
+  ```
+
+- DELETE `/api/jobs/:id`
+
+  - Description: Delete a job receiving its id
+  - Permissions allowed: Manager
+  - Request header: req.params.id to retrieve id
+  - Request body: _None_
+  - Response: `204 Job successfully deleted` (success)
+  - Error responses: `401 Unauthorized` (not logged in or wrong permissions), `422 Unprocessable Entity` (validation of id failed) or `500 Internal Server Error` (generic error)
+  - Response body: An error message in case of failure
+
+  ```
+  {
+      "error": "message text"
+  }
+  ```
 
 ## Database Tables
 
