@@ -26,7 +26,7 @@ router.get('/ticket/:serviceId',
         const serviceId = req.params.serviceId;
         const errors = validationResult(req).formatWith(errorFormatter);
         if (!errors.isEmpty())
-            return res.status(500).json({ error: errors.array({}) });
+            return res.status(422).json({ error: errors.array({}) });
     let nr = await ticketDao.getNumberActiveTicketsByServiceId(serviceId);
     let service = await serviceDao.getServicesById(serviceId);
     let tr = service[0] && service[0].avarageTime;
@@ -67,9 +67,9 @@ router.post('/ticket',check('serviceID').exists().isInt().toInt(),
     // isLoggedIn, WAIT FOR AUTHENTICATION
     async (req, res) => {
         // body validation
-        /*const errors = validationResult(req).formatWith(errorFormatter);
+        const errors = validationResult(req).formatWith(errorFormatter);
         if (!errors.isEmpty())
-            return res.status(422).json({ error: errors.array({}) });*/
+            return res.status(422).json({ error: errors.array({}) });
 
         // check whether ID Manager exists
         const serviceId = req.body.serviceID;
