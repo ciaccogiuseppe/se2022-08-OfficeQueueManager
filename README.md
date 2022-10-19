@@ -135,13 +135,37 @@
   - Request body: _None_
   - Response: `200 OK` (success)
   - Error responses: `500 Internal Server Error` (generic error)
-  - Response body: An array of objects, containing all services with the description, the avarage time and the manager, or an error message in case of failure
+  - Response body: An array of objects, containing all services with the name, the description, the avarage time and the manager, or an error message in case of failure
 
   ```
   [
     ...,
     {
       "idS": 1,
+      "name"; "something",
+      "description": "something",
+      "avarageTime": 10,
+      "idM": 1,
+    },
+    ...
+  ]
+  ```
+
+- GET `/api/service/:id`
+
+  - Description: Return an array containing the service with a specific ID_Service
+  - Request header: req.params.id to retrieve id
+  - Request body: _None_
+  - Response: `200 OK` (success)
+  - Error responses: `500 Internal Server Error` (generic error)
+  - Response body: An array of objects, containing all services with the name, the description, the avarage time and the manager, or an error message in case of failure
+
+  ```
+  [
+    ...,
+    {
+      "idS": 1,
+      "name"; "something",
       "description": "something",
       "avarageTime": 10,
       "idM": 1,
@@ -190,13 +214,50 @@
   }
   ```
 
+### Tickets
+- GET `/api/ticket/:serviceId`
+
+  - Description: Return estimated waiting time for a specific service
+  - Request body: _None_
+  - Response: `200 OK` (success)
+  - Error responses: `500 Internal Server Error` (generic error)
+  - Response body: Estimated waiting time in mm:ss format
+
+  ```
+  {
+    "time": "10:20"
+  }
+  ```
+
+- POST `/api/ticket`
+
+  - Description: Create a new ticket
+  - Permissions allowed: Manager, Officer
+  - Request body: Service ID
+
+  ```
+  {
+      "serviceID": 10
+  }
+  ```
+
+  - Response: `201 OK` (Created)
+  - Error responses: `401 Unauthorized` (not logged in or wrong permissions), `422 Unprocessable Entity` (validation of request body failed) or `503 Internal Server Error` (generic error)
+  - Response body: Ticket ID/An error message in case of failure
+
+  ```
+  {
+      "ticketID": 23
+  }
+  ```
+
 ## Database Tables
 
 - Table `Manager` - contains ID_Manager(primary key) nameM, surnameM, email, password, salt
 - Table `Counter` - contains ID_Counter(primary key), ID_Manager(foreign key)
 - Table `Service` - contains ID_Service(primary key), name, description, avarage_time, ID_Manager(foreign key)
 - Table `Job` - contains ID_Job(primary key), ID_Manager(foreign key), ID_Counter(foreign key), ID_Service(foreign key)
-- Table `Ticket` - contains ID_Ticket(primary key), status, numTicket, ID_Service(foreign key)
+- Table `Ticket` - contains ID_Ticket(primary key), status, ID_Service(foreign key)
 
 ### Notes
 
