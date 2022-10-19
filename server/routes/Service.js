@@ -35,7 +35,9 @@ router.get('/service/:id', async (req,res) => {
 // POST /api/service
 // define a new service
 router.post('/service', isLoggedIn, [
-    check('description').isLength({ min: 1})
+    check('name').isLength({ min: 1}),
+    check('description').isLength({ min: 1}),
+    check('avarageTime').isInt()
   ], async (req, res) => {
     
     const errors = validationResult(req);
@@ -59,8 +61,9 @@ router.post('/service', isLoggedIn, [
   
 // DELETE /api/service
 // delete a service given its id
-router.delete('/service/:id', isLoggedIn, async (req, res) => {
-  
+router.delete('/service/:id', isLoggedIn, [
+  check('id').isInt()
+], async (req, res) => {  
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({errors: errors.array()});

@@ -26,6 +26,18 @@ describe("Job APIs", function () {
             });
     });
 
+    step("GET all jobs", (done) => {
+        authenticatedUser
+            .get('jobs')
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.be.a('array');
+                const response = res.body;
+                console.log(response);
+                done();
+            });
+    });
+
     step("insert job authenticated", (done) => {
         authenticatedUser
             .post('job')
