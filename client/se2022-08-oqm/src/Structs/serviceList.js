@@ -4,8 +4,9 @@
  * @param {string} description
  * @param {int} averagetime 
  */
-function Service(){
+function Service(id, name, description, averagetime){
     this.id = id;
+    this.name = name;
     this.description = description;
     this.averagetime = averagetime;
 }

@@ -4,6 +4,7 @@ import FirstPage from "../Views/FirstPage";
 import LoginManager from "../Views/LoginManager";
 import LoginOfficer from "../Views/LoginOfficer";
 import ManagerPage from "../Views/ManagerPage";
+import TicketPage from "../Views/TicketPage";
 
 
 export const routeIndex = [
@@ -32,6 +33,11 @@ export const routeIndex = [
         name: "Client Page",
         component: <ClientPage/>,
         path: '/client'
+    },
+    {
+        name: "Ticket Page",
+        component: <TicketPage/>,
+        path: '/client/ticket'
     }
 ]
 

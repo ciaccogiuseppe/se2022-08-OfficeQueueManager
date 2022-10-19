@@ -1,4 +1,9 @@
-import React , {useState} from 'react';
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
 
 function ServiceTable(props){ 
     //props.services is a serviceList object
@@ -9,17 +14,17 @@ function ServiceTable(props){
         <TableContainer>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableBody>
-              {props.services.map((row) => (
+              {props.services ? props.services.ServiceList.map((row) => (
                 <TableRow
                   key={row.id}
                   onClick={() => props.setSelected(row)}
-                  active={selected && row.id === props.selected.id /*a selected object exists, and his id is equal to the current one.*/}
+                  active={props.selected && row.id === props.selected.id /*a selected object exists, and his id is equal to the current one.*/}
                 >
-                  <TableCell component="tr" scope="row">
+                  <TableCell scope="row">
                     {row.name} 
                   </TableCell>
                 </TableRow>
-              ))}
+              )) : false}
             </TableBody>
           </Table>
         </TableContainer>
