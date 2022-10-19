@@ -232,7 +232,6 @@
 - POST `/api/ticket`
 
   - Description: Create a new ticket
-  - Permissions allowed: Manager, Officer
   - Request body: Service ID
 
   ```
