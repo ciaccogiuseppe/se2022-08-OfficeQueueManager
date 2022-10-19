@@ -31,8 +31,14 @@
 
 ## React Client Application Routes
 
-- Route `/` : _brief description_
-- Route `/login` : _brief description_
+- Route `/` : `Home`. It allows to choose among _Client_, _Officer_ or _Manager_ profile.
+- Route `/manager-login` : `Login Manager`. Login page for a manager.
+- Route `/manager` : `Manager Page`. Home page for the manager, from which she can choose among the possible operations
+- Route `/manager/addcounter` : `Add Counter`. Here the manager can add a new counter.
+- Route `/manager/defineservice` : `Define Service`. Here the manager can define a new service.
+- Route `/manager/assign` : `Assign services to a counter`. Here the manager can assign one or more services to an existing counter.
+- Route `/client` : `Client Page`. It allows to choose between the interface to require tickets or the main board.
+- Route `/client/ticket` : `Ticket Page`. Interface to get a ticket: the user can select a service among the available ones, know how much time she is expected to wait, and finally get the ticket.
 
 ## API Server
 
