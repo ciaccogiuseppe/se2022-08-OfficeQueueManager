@@ -53,8 +53,7 @@ describe("Job APIs", function () {
     });
 
     step("GET all jobs", (done) => {
-        chai
-            .request(server)
+        authenticatedUser
             .get('jobs')
             .end((err, res) => {
                 res.should.have.status(200);
@@ -83,8 +82,7 @@ describe("Job APIs", function () {
     });
 
     step("GET all jobs", (done) => {
-        chai
-            .request(server)
+        authenticatedUser
             .get('jobs')
             .end((err, res) => {
                 res.should.have.status(200);
