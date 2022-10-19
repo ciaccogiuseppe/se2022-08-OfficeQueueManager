@@ -182,9 +182,8 @@
 
   ```
   {
-      "name": "something",
       "description": "something",
-      "avarageTime": 10
+      "avarageTime": 10,
   }
   ```
 
