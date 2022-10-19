@@ -111,3 +111,4 @@ app.get('/api/sessions/current', (req, res) => {  if(req.isAuthenticated()) {
 
 // Activate the server
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`));
+module.exports = app;
