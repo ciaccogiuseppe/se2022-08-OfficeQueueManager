@@ -1,5 +1,6 @@
 'use strict'
 
+import { Experimental_CssVarsProvider } from "@mui/material";
 import { Service, ServiceList } from "./utils/serviceList";
 import { Counter, CounterList } from "./utils/counterList";
 import {Job, JobList} from "./utils/jobList";
@@ -85,7 +86,7 @@ async function getService(serviceid) {
         /* Fetch request accepted */
         if (response.ok) {
             const jsonservice = await response.json();
-            return new Service(jsonservice.idS,jsonservice.description,jsonservice.idM,jsonservice.avarageTime,jsonservice.name);
+            return new Service(jsonservice.idS,jsonservice.description,jsonservice.avarageTime,jsonservice.name);
 
         } else {
             /* Application error (404, 500, 503 ...) */
@@ -154,29 +155,50 @@ async function deleteService(serviceid) {
 //===========================================================================================
 
 //post
-async function postTicket(ticket) {
-    let err = new Error()
-    const response = await fetch(URL + '/tickets', { //we have to agree on the API names
+async function postTicket(service) {
+    let err = new Error();
+    const response = await fetch(URL + '/ticket', { //we have to agree on the API names
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(ticket)
+        body: { "serviceID" : service.id }
     })
     if (response.ok) {
-        return response;
+        return response.ticketID;
     }
-    else if (response.status === 500) {
-        err.message = "500 INTERNAL SERVER ERROR";
+    else if (response.status === 503) {
+        err.message = "503 INTERNAL SERVER ERROR";
+        console.log(err);
         throw err;
     }
     else if (response.status === 422) {
         err.message = "422 UNPROCESSABLE ENTITY";
+        console.log(err);
         throw err;
     }
     else {
         err.message = "OTHER ERROR"
+        console.log(err);
         throw err;
     }
 
+}
+
+async function getXTime(service) {
+    let err = new Error();
+    const response = await fetch(URL + '/ticket/' + service.id);
+    if (response.ok) {
+        return response.time;
+    }
+    else if (response.status === 500) {
+        err.message = "500 GENERIC ERROR";
+        console.log(err);
+        throw err;
+    }
+    else {
+        err.message = "OTHER ERROR"
+        console.log(err);
+        throw err;
+    }
 }
 
 //===========================================================================================
@@ -349,5 +371,5 @@ async function getJobs() {
 }
 
 
-const API = {getJobs,getCounters,deleteCounter,deleteService,deleteServicefromCounter,assignServicetoCounter, postCounter,postTicket,getAllServices,logOut,logIn,postService,getService};
+const API = {getJobs,getCounters,deleteCounter,deleteService,deleteServicefromCounter,assignServicetoCounter, postCounter,postTicket,getXTime,getAllServices,logOut,logIn,postService,getService};
 export default API;
