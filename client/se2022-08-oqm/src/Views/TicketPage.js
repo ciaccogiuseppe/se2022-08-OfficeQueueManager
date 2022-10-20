@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import ServiceTable from '../Component/ServiceTable';
 import API from '../API';
 import { Service, ServiceList } from '../Structs/serviceList';
+import { Paper } from '@mui/material';
 
 function TicketPage(props) {
     const [services, setServices] = React.useState(false);
@@ -13,12 +14,12 @@ function TicketPage(props) {
     const [xTime, setXTime] = React.useState(0);
 
 
-    React.useEffect( () => {
+    React.useEffect(() => {
         const loadServices = async () => {
             const s = await API.getAllServices();
             setServices(() => s);
         }
-        if(services === false){
+        if (services === false) {
             loadServices();
         }
     }, [services]);
@@ -26,7 +27,7 @@ function TicketPage(props) {
 
 
     React.useEffect(() => {
-        if(selected){
+        if (selected) {
             expectedTime();
         }
     }, [selected.id]);
@@ -49,7 +50,7 @@ function TicketPage(props) {
 
     return (
         <>
-            <Typography variant="h1" gutterBottom>
+            <Typography variant="h2" marginTop={3}>
                 Office Queue Manager
             </Typography>
             <Typography variant="h5" gutterBottom>
@@ -57,24 +58,27 @@ function TicketPage(props) {
             </Typography>
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
-                    <Grid item xs={4}>
+                    <Grid item xs={1}></Grid>
+                    <Grid item xs={3}>
                         <ServiceTable services={services} selected={selected} setSelected={setSelected} />
                     </Grid>
-                    <Grid item xs={8}>
-                        <Typography variant="h3" gutterBottom>
-                            {selected ? selected.name : false}
-                        </Typography>
-                        <Typography variant="h5" gutterBottom>
-                            {selected ? selected.description : false}
-                        </Typography>
-                        <Typography variant="h5" gutterBottom bgcolor='red'>
-                            {selected ? "Expected time to wait: " + xTime : false}
-                        </Typography>
-                        {selected ?
-                            <Grid container item>
-                                <Button variant="contained" onClick={() => setSelected(false)} sx={{ margin: 1 }}>Cancel</Button>
-                                <Button variant="contained" onClick={() => print(selected)} color="success" sx={{ margin: 1 }}>Get ticket</Button>
-                            </Grid> : false}
+                    <Grid item xs={7}>
+                        <Paper elevation={3}>
+                            <Typography variant="h3" gutterBottom>
+                                {selected ? selected.name : false}
+                            </Typography>
+                            <Typography variant="h5" gutterBottom>
+                                {selected ? selected.description : false}
+                            </Typography>
+                            <Typography variant="h5" gutterBottom bgcolor='red'>
+                                {selected ? "Expected time to wait: " + xTime + " minutes" : false}
+                            </Typography>
+                            {selected ?
+                                <Grid container item>
+                                    <Button variant="contained" onClick={() => setSelected(false)} sx={{ margin: 1 }}>Cancel</Button>
+                                    <Button variant="contained" onClick={() => print(selected)} color="success" sx={{ margin: 1 }}>Get ticket</Button>
+                                </Grid> : false}
+                        </Paper>
                     </Grid>
                 </Grid>
             </Box>

@@ -23,13 +23,13 @@ function FirstPage() {
                             <br/>Click on your profile
                         </Typography>
                         <Grid container>
-                            <Grid containers marginTop={7} item sm>
+                            <Grid marginTop={7} item sm>
                                 <Button component={Link} to={"/client"} variant="contained">I&apos;m a <br/>client</Button>
                             </Grid>
-                            <Grid containers marginTop={7}>
+                            <Grid marginTop={7}>
                                 <Button component={Link} to={"/officer"} variant="contained">{"I'm an"} <br/>officer</Button>
                             </Grid>
-                            <Grid containers marginTop={7} item sm>
+                            <Grid marginTop={7} item sm>
                                 <Button component={Link} to={"/manager-login"} variant="contained">I&apos;m a <br/>manager</Button>
                             </Grid>
                         </Grid>
