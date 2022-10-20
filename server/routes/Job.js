@@ -7,6 +7,7 @@ const { errorFormatter } = require('../utils/utils');
 const jobDao = require('../dao/JobDAO');
 const managerDao = require('../dao/ManagerDAO');
 const counterDao = require('../dao/CounterDAO');
+const serviceDao = require('../dao/ServiceDAO');
 
 const router = express.Router();
 
@@ -33,16 +34,22 @@ router.post('/job',
             const manager = await managerDao.getManagerById(managerId);
             // case: manager not found
             if (!manager) {
-                return res.status(404).json({ error: `Specified manager not found` });
+                return res.status(404).json({ error: `Manager not found` });
             }
 
             const counter = await counterDao.getCounters();
             // case: counter not found 
             if(!counter.find(element => element.ID_Counter==counterId)){
-                return res.status(404).json({ error: `Specified counter not found` });
+                return res.status(404).json({ error: `Counter not found` });
             }
 
-            // case: manager,counter found
+            const service = await serviceDao.getServicesById(serviceId);
+            // case: service not found
+            if(!service){
+                return res.status(404).json({ error: `Service not found` });
+            }
+
+            // case: manager,counter and service found
             jobDao.addJob(counterId,serviceId,managerId)
                 .then(() => res.status(201).json({ message: `Job successfully created` }))
                 .catch(() => res.status(500).json({ error: `Database error while saving the job` }));
@@ -79,8 +86,8 @@ async (req, res) => {
 // Return an array containing all jobs
 router.get('/jobs', (req, res) => {
     jobDao.getJobs()
-        .then((counters) => res.status(200).json(counters))
-        .catch(() => res.status(500).json({ error: `Database error while retrieving the jobs` }));
+        .then((jobs) => res.status(200).json(jobs))
+        .catch(() => res.status(500).json({ error: `Database error while retrieving Jobs` }));
 });
 
 

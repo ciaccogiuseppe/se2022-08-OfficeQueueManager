@@ -29,15 +29,15 @@ router.get('/counters', (req, res) => {
 // Create a new counter
 router.post('/counter',
     // isLoggedIn, WAIT FOR AUTHENTICATION
-    check('ID_Manager').exists().isInt().toInt(),
+    //check('ID_Manager').exists().isInt().toInt(),
     async (req, res) => {
-        // body validation
+        /*
         const errors = validationResult(req).formatWith(errorFormatter);
         if (!errors.isEmpty())
             return res.status(422).json({ error: errors.array({}) });
-
+        */
         // check whether ID Manager exists
-        const managerId = req.body.ID_Manager;
+        const managerId = req.user.id;
         try {
             const manager = await managerDao.getManagerById(managerId);
             // case: manager not found

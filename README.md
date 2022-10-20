@@ -31,8 +31,14 @@
 
 ## React Client Application Routes
 
-- Route `/` : _brief description_
-- Route `/login` : _brief description_
+- Route `/` : `Home` It allows to choose among _Client_, _Officer_ or _Manager_ profile.
+- Route `/manager-login` : `Login Manager` Login page for a manager.
+- Route `/manager` : `Manager Page` Home page for the manager, from which she can choose among the possible operations
+- Route `/manager/addcounter` : `Add Counter` Here the manager can add a new counter.
+- Route `/manager/defineservice` : `Define Service` Here the manager can define a new service.
+- Route `/manager/assign` : `Assign services to a counter` Here the manager can assign one or more services to an existing counter.
+- Route `/client` : `Client Page` It allows to choose between the interface to require tickets or the main board.
+- Route `/client/ticket` : `Ticket Page` Interface to get a ticket: the user can select a service among the available ones, know how much time she is expected to wait, and finally get the ticket.
 
 ## API Server
 
@@ -206,6 +212,103 @@
   - Request body: _None_
   - Response: `204 No Content` (success)
   - Error responses: `401 Unauthorized` (not logged in or wrong permissions), `422 Unprocessable Entity` (validation of id failed) or `503 Internal Server Error` (generic error)
+  - Response body: An error message in case of failure
+
+  ```
+  {
+      "error": "message text"
+  }
+  ```
+
+### Tickets
+- GET `/api/ticket/:serviceId`
+
+  - Description: Return estimated waiting time for a specific service
+  - Request body: _None_
+  - Response: `200 OK` (success)
+  - Error responses: `500 Internal Server Error` (generic error)
+  - Response body: Estimated waiting time in mm:ss format
+
+  ```
+  {
+    "time": "10:20"
+  }
+  ```
+
+- POST `/api/ticket`
+
+  - Description: Create a new ticket
+  - Request body: Service ID
+
+  ```
+  {
+      "serviceID": 10
+  }
+  ```
+
+  - Response: `201 OK` (Created)
+  - Error responses: `500 Internal Server Error` (generic error)
+  - Response body: Ticket ID/An error message in case of failure
+
+  ```
+  {
+      "ticketID": 23
+  }
+  ```
+### Job
+
+- GET `/api/jobs`
+
+  - Description: Return an array containing all jobs
+  - Request body: _None_
+  - Response: `200 OK` (success)
+  - Error responses: `500 Internal Server Error` (generic error)
+  - Response body: An array of jobs, containing job identifier, counters identifier, services identifier and manager identifier who associate they , or an error message in case of failure
+
+  ```
+  [
+    ...,
+    {
+      "ID_Job": 2,
+      "ID_Counter": 1,
+      "ID_Service": 5,
+      "ID_Manager": 2
+    },
+    ...
+  ]
+  ```
+
+- POST `/api/job`
+
+  - Description: Create a new job
+  - Permissions allowed: Manager
+  - Request body: Counter ID, Service ID 
+
+  ```
+  {
+      "ID_Counter": 1,
+      "ID_Service": 5
+  }
+  ```
+
+  - Response: `201 OK` (Created)
+  - Error responses: `401 Unauthorized` (not logged in or wrong permissions), `404 Not Found` (Manager not found, Counter not found, Service not found) , `422 Unprocessable Entity` (validation of request body failed) or `500 Internal Server Error` (generic error)
+  - Response body: An error message in case of failure
+
+  ```
+  {
+      "error": "message text"
+  }
+  ```
+
+- DELETE `/api/jobs/:id`
+
+  - Description: Delete a job receiving its id
+  - Permissions allowed: Manager
+  - Request header: req.params.id to retrieve id
+  - Request body: _None_
+  - Response: `204 Job successfully deleted` (success)
+  - Error responses: `401 Unauthorized` (not logged in or wrong permissions), `422 Unprocessable Entity` (validation of id failed) or `500 Internal Server Error` (generic error)
   - Response body: An error message in case of failure
 
   ```

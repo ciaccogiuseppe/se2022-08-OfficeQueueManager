@@ -3,7 +3,7 @@
 const express = require('express');
 const morgan = require('morgan'); // logging middleware
 const cors = require('cors');
-
+const { isLoggedIn } = require('./utils/utils');
 const passport = require('passport'); // auth middleware
 const LocalStrategy = require('passport-local').Strategy; // username and password for login
 const session = require('express-session'); // enable sessions
@@ -23,8 +23,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // declare routes
-const counterRoute = require('./routes/Counter.js');
-const jobRoute = require('./routes/Job.js');
+
 
 /*** Set up Passport ***/
 //set up the "username and password" login strategy
@@ -66,9 +65,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// apply routes
-app.use('/api', counterRoute);
-app.use('/api', jobRoute);
+///////////////*API*//////////////////
+// declare routes
+const serviceRoute = require('./routes/Service.js');
+const counterRoute = require('./routes/Counter.js');
+const jobRoute = require('./routes/Job.js');
+const ticketRoute = require('./routes/Tickets.js');
+
 
 //////*About the login and logout*////////
 app.post('/api/sessions', function(req, res, next) {
@@ -102,5 +105,14 @@ app.get('/api/sessions/current', (req, res) => {  if(req.isAuthenticated()) {
     res.status(401).json({error: 'Unauthenticated user!'});;
 });
 
+// apply routes
+app.use('/api', ticketRoute);
+app.use('/api', serviceRoute);
+
+app.use(isLoggedIn); //this will protect all the following API
+app.use('/api', counterRoute);
+app.use('/api', jobRoute);
+
 // Activate the server
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}/`));
+module.exports = app;

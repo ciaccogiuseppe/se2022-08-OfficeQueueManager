@@ -3,7 +3,7 @@
  * @param {int} id 
  * @param {int} idmanager 
  */
- function Counter(){
+ function Counter(id,idmanager){
     this.id = id;
     this.idmanager = idmanager;
 }
