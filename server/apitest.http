@@ -1,0 +1,55 @@
+POST http://localhost:3001/api/job
+Content-Type: application/json
+
+{
+    "ID_Counter": 1,
+    "ID_Service": 1,
+    "ID_Manager": 1
+}
+###
+POST http://localhost:3001/api/job
+Content-Type: application/json
+
+{
+    "ID_Counter": 1,
+    "ID_Service": 1,
+    "ID_Manager": 2
+}
+###
+POST http://localhost:3001/api/job
+Content-Type: application/json
+
+{
+    "ID_Counter": 2,
+    "ID_Service": 1,
+    "ID_Manager": 1
+}
+###
+GET http://localhost:3001/api/jobs
+###
+GET http://localhost:3001/api/counters
+###
+POST  http://localhost:3001/api/counter
+Content-Type: application/json
+
+{
+    "ID_Manager": 1
+}
+###
+DELETE http://localhost:3001/api/counters/5
+###
+DELETE http://localhost:3001/api/jobs/2
+###
+DELETE http://localhost:3001/api/jobs/1
+###
+GET http://localhost:3001/api/service/2
+###
+POST http://localhost:3001/api/ticket
+Content-Type: application/json
+
+{
+    "serviceID": 2
+}
+###
+GET http://localhost:3001/api/ticket/2
+###
