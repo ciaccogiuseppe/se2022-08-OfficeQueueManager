@@ -45,6 +45,7 @@ function TicketPage(props) {
 
         console.log("Print ticket:");
         console.log(ticket);
+        window.alert("Your ticket number is " + ticket);
         setSelected(() => false);
     }
 
