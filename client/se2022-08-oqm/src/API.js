@@ -163,7 +163,8 @@ async function postTicket(service) {
         body: JSON.stringify({ "serviceID" : service.id })
     })
     if (response.ok) {
-        return response.ticketID;
+        const resp = await response.json();
+        return resp.ticketID;
     }
     else if (response.status === 503) {
         err.message = "503 INTERNAL SERVER ERROR";
