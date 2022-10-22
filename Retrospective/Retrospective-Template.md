@@ -66,13 +66,18 @@ sections:
   The main mistake was not defining and deciding exactly what each task included, especially for the front-end part.
 
 - What lessons did you learn (both positive and negative) in this sprint?\
-
+  Not defining what operations a task include can harm its execution, forgetting something important to do.
+  Despite the task splitting was not carried out correctly, the team still managed to finish all the stories defined, without exceeding their     personal workload too much.
 
 - Which improvement goals set in the previous retrospective were you able to achieve?\
 - Which ones you were not able to achieve? Why?\
 
 - Improvement goals for the next sprint and how to achieve them (technical tasks, team coordination, etc.)\
+  Better task splitting: for each task defining all the required operations that it will include 
+  Improve branching: define common rules for executing commits and branches on the current work 
+  Improve estimations: define better estimations for testing tasks and front-end tasks  
 
 > Propose one or two
 
 - One thing you are proud of as a Team!!\
+  The team has a good cooridnation, everybody works as espected and reacts promptly to communications
