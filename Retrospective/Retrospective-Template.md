@@ -18,6 +18,7 @@ sections:
 **Remember** a story is done ONLY if it fits the Definition of Done:
 
 - Unit Tests passing
+- Integration Tests
 - Code review completed
 - Code present on VCS
 - End-to-End tests performed
@@ -52,9 +53,12 @@ sections:
   - Total hours spent: 6,334
   - Nr of automated unit test cases: 34
   - Coverage (if available): 100%
-- E2E testing:
+- Integration testing:
   - Total hours estimated: 4,5
   - Total hours spent: 5,834
+- E22 testing:
+  - Total hours estimated: 1
+  - Total hours spent: 1
 - Code review
   - Total hours estimated
   - Total hours spent
@@ -66,16 +70,20 @@ sections:
   The main mistake was not defining and deciding exactly what each task included, especially for the front-end part.
 
 - What lessons did you learn (both positive and negative) in this sprint?\
-  Not defining what operations a task include can harm its execution, forgetting something important to do.
-  Despite the task splitting was not carried out correctly, the team still managed to finish all the stories defined, without exceeding their     personal workload too much.
+  Not defining what operations a task include can harm its execution, forgetting something important to do or doing something that yous shouldn't do.
+  Despite the task splitting was not carried out correctly, the team still managed to finish all the stories defined, without exceeding their       personal workload too much.
 
 - Which improvement goals set in the previous retrospective were you able to achieve?\
+  This is our first retrospective. 
 - Which ones you were not able to achieve? Why?\
+  This is our first retrospective, again.
 
 - Improvement goals for the next sprint and how to achieve them (technical tasks, team coordination, etc.)\
   Better task splitting: for each task defining all the required operations that it will include 
-  Improve branching: define common rules for executing commits and branches on the current work 
+  Improve branching: define common rules for executing commits and branches on the current work, decide a folder structure to follow 
   Improve estimations: define better estimations for testing tasks and front-end tasks  
+  Keep tracking of current work on YouTrack: adding spent time at the end of the working day
+  Improve DB definition
 
 > Propose one or two
 
