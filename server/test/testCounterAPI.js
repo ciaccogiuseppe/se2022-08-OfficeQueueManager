@@ -5,13 +5,27 @@ chai.use(chaiHttp);
 chai.should();
 const app = require('../index.js');
 let agent = chai.request.agent(app);
-
+const request = require('supertest');
+const server = "http://localhost:3001";
 
 /* Calls api/counters and verifies if returned data are equals to expectedData 
    and if the returnet status (200,400,...) is equal to expectedHTTPStatus */
 function testGETCounters(expectedData, expectedHTTPstatus){
+    let authenticatedUser = request.agent(server);
+    step('T1 login', (done) => {
+        authenticatedUser
+            .post('/api/sessions')
+            .send({
+                "username": "mariorossi@po.it",
+                "password": "password"
+            })
+            .end((err, res) => {
+                res.should.have.status(200);
+                done();
+            });
+    });
     it('GET/api/counters', async function() {
-        await agent.get('/api/counters')
+        await authenticatedUser.get('/api/counters')
                     .then(function(res) {
                         res.should.have.status(expectedHTTPstatus);
                         if(expectedData.length != 0){
@@ -27,8 +41,21 @@ function testGETCounters(expectedData, expectedHTTPstatus){
 }
 
 function testDELETECounter(id,expectedHTTPStatus) {
+    let authenticatedUser = request.agent(server);
+    step('T1 login', (done) => {
+        authenticatedUser
+            .post('/api/sessions')
+            .send({
+                "username": "mariorossi@po.it",
+                "password": "password"
+            })
+            .end((err, res) => {
+                res.should.have.status(200);
+                done();
+            });
+    });
     it('DELETE/api/counters/:id', async function() {
-        await agent.delete('/api/counters/'+id)
+        await authenticatedUser.delete('/api/counters/'+id)
                     .then(function(res) {
                         res.should.have.status(expectedHTTPStatus);
                     })
@@ -36,8 +63,21 @@ function testDELETECounter(id,expectedHTTPStatus) {
 }
 
 function testPOSTCounter(expectedData, expectedHTTPStatus) {
+    let authenticatedUser = request.agent(server);
+    step('T1 login', (done) => {
+        authenticatedUser
+            .post('/api/sessions')
+            .send({
+                "username": "mariorossi@po.it",
+                "password": "password"
+            })
+            .end((err, res) => {
+                res.should.have.status(200);
+                done();
+            });
+    });
     it('POST/api/counter', async function() {
-        await agent.post('/api/counter')
+        await authenticatedUser.post('/api/counter')
             .send(expectedData)
             .then(function(res) {
                 res.should.have.status(expectedHTTPStatus);
@@ -53,7 +93,7 @@ describe('test CounterAPI',()=>{
     //testPOSTCounter({"Manager_ID": 1},422);
 
     // Missing manager 
-    testPOSTCounter({"ID_Manager": 5},404);
+    //testPOSTCounter({"ID_Manager": 5},404);
 
     // OK: Counter created successfully
     testPOSTCounter({"ID_Manager": 1},201);

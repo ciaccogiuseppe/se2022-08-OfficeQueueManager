@@ -25,3 +25,8 @@ jobs:
          npm install
          npm run build --if-present
          npm test
+    - run: |
+         cd server
+         npm install
+         npm run build --if-present
+         npm run test_integration
