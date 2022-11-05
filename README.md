@@ -1,5 +1,7 @@
 # se2022-08-OfficeQueueManager
 
+![Test](https://github.com/ciaccogiuseppe/se2022-08-OfficeQueueManager/workflows/Node.js%20CI/badge.svg)
+
 ## Usage
 
 ### Client
