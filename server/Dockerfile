@@ -1,5 +1,5 @@
 FROM node:16.18
-WORKDIR /app/client
+WORKDIR /app/server
 COPY package.json ./
 COPY package-lock.json ./
 COPY ./ ./
