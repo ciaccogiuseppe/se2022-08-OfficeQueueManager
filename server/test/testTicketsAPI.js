@@ -46,7 +46,7 @@ describe('test TicketAPI',()=>{
     testPOSTTicket({"serviceID":10},404);
 
     // OK : New Ticket issued
-    testPOSTTicket({"serviceID":2},201);
+    //testPOSTTicket({"serviceID":2},201);
 
     /*******  GET  *******/
     // Wrong body 
