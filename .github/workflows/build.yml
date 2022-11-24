@@ -20,7 +20,7 @@ jobs:
       - name: Test and coverage
         run: |
          cd code/server
-         npm test --coverage
+         npm test -- --coverage
          npm run test_integration
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
