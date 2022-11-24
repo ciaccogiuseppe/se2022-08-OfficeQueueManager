@@ -24,7 +24,7 @@ jobs:
          cd server
          npm install
          npm run build --if-present
-         npm test
+         npm test -- --coverage
     - run: |
          cd server
          npm install
